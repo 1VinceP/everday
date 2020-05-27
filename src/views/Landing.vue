@@ -10,6 +10,7 @@ export default {
 
    data: () => ({
       username: '',
+      email: '',
       password: '',
       loggingIn: false,
       errorMessage: '',
@@ -21,6 +22,21 @@ export default {
 
    methods: {
       ...mapMutations(['setStore']),
+
+      async createAccount() {
+         const { username, email, password } = this;
+         const json = { username, email, password };
+         this.logginIn = true;
+         try {
+            const user = await ky.post('/auth/create', { json }).json();
+            this.loggingIn = false;
+            this.setStore({ user });
+            this.$router.push('/account');
+         } catch (error) {
+            // this.loggingIn = false;
+            console.log(error);
+         }
+      },
 
       async login() {
          const json = { username: this.username, password: this.password };
@@ -62,8 +78,9 @@ export default {
          <div class="login-container">
             Login
             <input v-model="username" placeholder="username" />
+            <input v-model="email" placeholder="email" />
             <input v-model="password" @keypress="handleEnter" placeholder="password" />
-            <button>Sign Up</button>
+            <button @click="createAccount">Sign Up</button>
             <button @click="login" :disabled="loggingIn || !username || !password">Login</button>
             <div class="error-message" v-show="errorMessage">{{ errorMessage }}</div>
          </div>

@@ -28,8 +28,10 @@ CREATE TABLE Users (
    , "friend_code" CHAR(19)
    , "tier"        TEXT
 );
-INSERT INTO Users ("username", "password", "email", "friend_code") VALUES ('a', 'a', 'a@email.com', '1234-1234-1234-1234');
-INSERT INTO Users ("username", "password", "email", "friend_code") VALUES ('b', 'b', 'b@email.com', '4321-4321-4321-4321');
+INSERT INTO Users ("username", "password", "email", "friend_code", "tier")
+   VALUES ('a', 'a', 'a@email.com', '1234-1234-1234-1234', 'advanced');
+INSERT INTO Users ("username", "password", "email", "friend_code", "tier")
+   VALUES ('b', 'b', 'b@email.com', '4321-4321-4321-4321', null);
 
 CREATE TABLE Activity (
      id SERIAL     PRIMARY KEY
@@ -54,19 +56,21 @@ CREATE TABLE Activity_reactions (
 );
 
 CREATE TABLE Games (
-     id SERIAL       PRIMARY KEY
+     id              CHAR(36) NOT NULL PRIMARY KEY
    , "user_id"       INTEGER REFERENCES Users(id)
    , "name"          TEXT
    , "description"   TEXT
    , "creation_date" TIMESTAMP
    , "last_played"   TEXT
 );
-INSERT INTO Games ("user_id", "name", "description") VALUES (1, 'Game 1', 'A neat game');
-INSERT INTO Games ("user_id", "name", "description") VALUES (1, 'Game 2', 'A bad game');
+INSERT INTO Games (id, "user_id", "name", "description")
+   VALUES ('12334556781234567890123456', 1, 'Game 1', 'A neat game');
+INSERT INTO Games (id, "user_id", "name", "description")
+   VALUES ('12334556781234567890654321', 1, 'Game 2', 'A bad game');
 
 CREATE TABLE Players (
      id SERIAL      PRIMARY KEY
-   , "game_id"      INTEGER REFERENCES Games(id) ON DELETE CASCADE
+   , "game_id"      CHAR(36) REFERENCES Games(id) ON DELETE CASCADE
    , "name"         TEXT
    , "ai"           BOOLEAN
    , "player_score" INTEGER
@@ -79,7 +83,7 @@ CREATE TABLE Players (
 
 CREATE TABLE Galaxies (
      id SERIAL PRIMARY KEY
-   , "game_id" INTEGER REFERENCES Games(id)
+   , "game_id" CHAR(36) REFERENCES Games(id)
    , "name"    TEXT
    , "size"    TEXT
 );
@@ -143,7 +147,7 @@ CREATE TABLE Settlements (
 
 CREATE TABLE Fleets (
      id SERIAL          PRIMARY KEY
-   , "game_id"          INTEGER REFERENCES Games(id)
+   , "game_id"          CHAR(36) REFERENCES Games(id)
    , "player_id"        INTEGER REFERENCES Players(id)
    , "system_location"  INTEGER REFERENCES Systems(id)
    , "planet_location"  INTEGER REFERENCES Planets(id)

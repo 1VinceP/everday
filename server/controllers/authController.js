@@ -1,26 +1,29 @@
 const bcrypt = require('bcrypt');
+const chalk = require('chalk');
+const shortId = require('../utils/shortId');
 const saltRounds = Number(process.env.BCRYPT_SALT_ROUNDS);
 
 module.exports = {
    createUser: async (req, res) => {
       const { username, email, password } = req.body;
 
-      const usernameTaken = await req.app.get('db').users.find({ username });
-      const emailTaken = await req.app.get('db').users.find({ email });
+      const usernameFound = await req.app.get('db').users.find({ username });
+      const emailFound = await req.app.get('db').users.find({ email });
 
-      if (usernameTaken) {
-         res.status(400).send('That username is already in use.');
+      if (usernameFound.length > 0) {
+         res.status(400).send({ message: 'That username is already in use.' });
          return;
-      } else if (emailTaken) {
-         res.status(400).send('That email is already in use.');
+      } else if (emailFound.length > 0) {
+         res.status(400).send({ message: 'That email is already in use.' });
          return;
       }
 
+      const friend_code = [shortId(4), shortId(4), shortId(4), shortId(4)].join('-').toUpperCase();
       const hash = await bcrypt.hash(password, saltRounds);
-      const [user] = await req.app.get('db').auth.createUser({ username, email, password: hash });
+      const [user] = await req.app.get('db').auth.createUser({ username, email, password: hash, friend_code });
+      console.log(chalk.yellow('New user created.'));
 
-      req.session.user_id = user.user_id;
-
+      req.session.userId = user.user_id;
       res.status(200).send(user);
    },
 
@@ -32,7 +35,7 @@ module.exports = {
       if (user) {
          let match;
          if (process.env.DEV) {
-            // match without bcrypt for easy dev
+            // match without bcrypt for dev
             match = password === user.password;
          } else {
             match = await bcrypt.compare(password, user.password);
@@ -40,16 +43,17 @@ module.exports = {
 
          if (match) {
             req.session.userId = user.id;
-
+            console.log(chalk.green('LOGIN'));
             res.status(200).send(user);
          } else {
-            res.status(400).send('Username and password combination not found');
+            res.status(400).send('Username and password combination not found.');
          }
       }
    },
 
    logout: (req, res) => {
       req.session.destroy();
+      console.log(chalk.green('LOGOUT'));
       res.sendStatus(200);
    },
 

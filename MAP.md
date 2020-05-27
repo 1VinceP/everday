@@ -1,0 +1,39 @@
+- [ ] v0.0.1 - The Setup
+  - [x] setup db
+  - [x] login
+    - [x] create account
+    - [x] without secure for dev
+    - [x] with secure
+  - [x] account page
+    - [x] list games
+      - [x] create game
+      - [x] edit game
+      - [x] delete game
+    - [x] list feed
+      - [x] placeholder
+    - [x] list news
+      - [x] route to article
+  - [x] news page
+    - [x] list news
+    - [x] route to article
+  - [x] news article page
+    - [x] display article
+  - [ ] complex db id strings
+  - [ ] server sanitization
+  - [ ] first deploy to heroku
+
+- [ ] v0.0.2 - The Game Basics
+  - [ ] load game dashboard
+  - [ ] track achievements
+
+- [ ] v0.0.3 - Cleanup 1
+  - [ ] better API error handling
+    - [ ] auth endpoints
+    - [ ] user endpoints
+    - [ ] game endpoints
+    - [ ] retrieval endpoints
+    - [ ] news endpoints
+
+- [ ] v0.0.5 - UI Overhaul
+  - [ ] out of game
+  - [ ] in game

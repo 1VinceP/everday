@@ -2,11 +2,12 @@
 import ky from 'ky';
 import { mapState, mapMutations } from 'vuex';
 import SiteHeader from '@/components/SiteHeader.vue';
+import Game from '@/components/account/Game.vue';
 
 export default {
    name: 'account',
 
-   components: { SiteHeader },
+   components: { SiteHeader, Game },
 
    data: () => ({
       news: [],
@@ -29,24 +30,21 @@ export default {
    methods: {
       ...mapMutations(['setStore']),
 
-      async onDelete(id) {
-         // TODO: Remove confirm
-         // eslint-disable-next-line no-alert
-         const confirmed = window.confirm('Are you sure? This game will be gone forever.');
-         if (confirmed) {
-            const games = await ky.delete(`/games/${id}`, {
-               headers: { 'user-id': this.user.id },
-            }).json();
-            this.setStore({ games });
-         }
-      },
-
       async fetchGames() {
          this.loadingGames = true;
 
-         const games = await ky.get(`/games/${this.user.id}`).json();
+         const games = await ky.get(`/games/${this.user.id}`, {
+            headers: { 'user-id': this.user.id },
+         }).json();
          this.setStore({ games });
          this.loadingGames = false;
+      },
+
+      async onCreateGame() {
+         const games = await ky.post('/games', {
+            headers: { 'user-id': this.user.id },
+         }).json();
+         this.setStore({ games });
       },
 
       async fetchNews() {
@@ -72,17 +70,10 @@ export default {
       <div class="account">
          <section class="games">
             <div class="section-title">Games</div>
-
-            <div v-for="game in games" :key="game.id" class="game">
-               <div class="head">{{ game.name }}</div>
-               <div class="body"></div>
-               <div class="foot">
-                  <button class="play">Play</button>
-                  <button class="edit">Edit</button>
-                  <button class="delete" @click="onDelete(game.id)">Delete</button>
-               </div>
-            </div>
-            <button v-show="canCreateGame" class="create-game">Create Game</button>
+            <Game v-for="game in games" :key="game.id" :game="game" />
+            <button v-show="canCreateGame" @click="onCreateGame" class="create-game">
+               Create Game
+            </button>
          </section>
 
          <section class="feed">
@@ -129,42 +120,6 @@ export default {
       flex: 1;
       padding: 10px;
 
-      .game {
-         height: 200px;
-         width: 100%;
-         background: $light-dark;
-         display: flex;
-         flex-direction: column;
-         justify-content: space-between;
-         align-items: center;
-         border-radius: 3px;
-         padding: 10px 20px;
-         &:not(:last-child) {
-            margin-bottom: 10px;
-         }
-
-         .head {
-            width: 100%;
-            display: flex;
-         }
-
-         .foot {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            button {
-               border: none;
-               background: none;
-               cursor: pointer;
-               &.play { color: lime }
-               &.edit { color: aquamarine }
-               &.delete { color: red; }
-            }
-         }
-      }
-
       .create-game {
          width: 100%;
          background: green;
@@ -182,6 +137,7 @@ export default {
          background: $light-dark;
          margin-bottom: 10px;
          border-radius: 3px;
+         padding-top: 10px;
       }
    }
 

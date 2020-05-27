@@ -49,12 +49,15 @@ massive(process.env.DATABASE_URI).then(db => {
 });
 
 /* authentication */
+app.post('/auth/create', authController.createUser);
 app.post('/auth/login', authController.login);
 app.post('/auth/logout', authController.logout);
 app.get('/auth/checkSession', authController.checkSession);
 
 /* games */
-app.get('/games/:userId', gamesController.getGames);
+app.get('/games/:userId', checkAuth, gamesController.getGames);
+app.post('/games', checkAuth, gamesController.createGame);
+app.put('/games/:id', checkAuth, gamesController.editGame);
 app.delete('/games/:id', checkAuth, gamesController.deleteGame);
 
 /* hardcoded data */
