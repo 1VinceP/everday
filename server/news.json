@@ -1,0 +1,24 @@
+[
+   {
+      "id": "27-05-20-1",
+      "title": "First Article",
+      "image": "",
+      "date": "March 27, 2020",
+      "content": [
+         "The first article.",
+         "Another paragraph."
+      ],
+      "archived": true
+   },
+   {
+      "id": "27-05-20-2",
+      "title": "Welcome to Everday!",
+      "image": "",
+      "date": "March 27, 2020",
+      "content": [
+         "I'm surprised you made it here already! Everday is very much still in the early phases of development.",
+         "Feel free to explore the site and even play a game when it becomes available! Just keep in mind that everything is subject to change, and your games may be corrupted and unrecoverable at this point. Play at your own risk."
+      ],
+      "archived": false
+   }
+]

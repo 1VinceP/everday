@@ -18,6 +18,7 @@ module.exports = {
 		'linebreak-style': 'off',
 		'prefer-destructuring': 'off',
 		'no-else-return': 'off',
+		'indent': ['error', 3]
 	},
 	overrides: [
 		{
@@ -27,9 +28,6 @@ module.exports = {
 			],
 			env: {
 				jest: true,
-			},
-			rules: {
-				indent: [3, 'tab'],
 			},
 		},
 	],
