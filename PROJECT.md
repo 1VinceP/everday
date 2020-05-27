@@ -9,6 +9,55 @@ Players take on the role of leading a fledgling federation that just discovered 
 
 ## Road Map
 
+### Schemas
+#### Ships
+- name
+- size
+   - small, medium, large, capital
+      - S: 3/squadron
+      - M: 2/squadron
+      - L: 1/squadron
+      - C: 1/squadron/fleet
+- role
+   - Fighter, Transporter, Explorer, Defender, Commander
+   - A single ship have multiple roles
+   - Roles exist to help players determine the capabilities of a ship, and have no actual impact on the ship's capabilities
+- environment
+   - Where it can effectively operate
+   - Tanks cannot fight in space, for example
+   - Most ships will have a value of "all"
+- hull
+   - Health of the ship
+- shields
+   - Protection. Reduce incoming damage by shield strength
+- speed
+   - How quickly it can act
+- power
+   - Approximate strength, used for estimating total squadron/fleet strength
+- range
+   - Distance it can jump
+- fuel-consumption
+   - Cost to jump
+- food-consumption
+   - Passive maintenance costs
+- cargo
+   - Amount of cargo it can hold
+   - One unit = one unit of material or 3 humans (1 squadron)
+- hangar
+   - Room for smaller ships
+   - Small ships require 1 unit, medium ships 3
+- hardpoints
+   - s, m, l, h
+   - Amount of weapons/equipment that can be equipped of each size
+   - Smaller equipment can be mounted in larger slots
+   - Weapons do +1 damage for each tier smaller the target is
+   - Weapons do -1 damage for each tier larger the target is
+- cost
+   - purchase
+      - The cost to purchase the ship with credits
+   - craft
+      - The cost to build a ship from raw materials
+
 ### Views
 
 #### Login / Splash

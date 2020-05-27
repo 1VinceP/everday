@@ -1,0 +1,170 @@
+[
+   {
+      "id": 0,
+      "name": "",
+      "size": "",
+      "role": "",
+      "environment": "",
+      "base_hull": 0,
+      "base_shields": 0,
+      "base_speed": 0,
+      "base_power": 0,
+      "base_range": 0,
+      "base_fuel_consumption": 0,
+      "base_food_consumption": 0,
+      "cargo": 0,
+      "hangar": 0,
+      "hardpoints": {
+         "small": 0,
+         "medium": 0,
+         "large": 0,
+         "huge": 0
+      },
+      "cost": {
+         "purchase": 0,
+         "craft": {}
+      }
+   },
+   {
+      "id": 1,
+      "name": "Striker",
+      "size": "small",
+      "role": "Fighter",
+      "environment": "all",
+      "base_hull": 3,
+      "base_shields": 1,
+      "base_speed": 7,
+      "base_power": 2,
+      "base_range": 5,
+      "base_fuel_consumption": 1,
+      "base_food_consumption": 0,
+      "cargo": 1,
+      "hangar": 0,
+      "hardpoints": {
+         "small": 3,
+         "medium": 0,
+         "large": 0,
+         "huge": 0
+      },
+      "cost": {
+         "purchase": 1000,
+         "craft": {
+            "metal": 10,
+            "stone": 3,
+            "water": 3
+         }
+      }
+   },
+   {
+      "id": 2,
+      "name": "Shipper",
+      "size": "small",
+      "role": "Transport",
+      "environment": "all",
+      "base_hull": 4,
+      "base_shields": 1,
+      "base_speed": 3,
+      "base_power": 1,
+      "base_range": 7,
+      "base_fuel_consumption": 1,
+      "base_food_consumption": 0,
+      "cargo": 8,
+      "hangar": 0,
+      "hardpoints": {
+         "small": 2,
+         "medium": 0,
+         "large": 0,
+         "huge": 0
+      },
+      "cost": {
+         "purchase": 1400,
+         "craft": {
+            "metal": 12,
+            "stone": 3,
+            "water": 3
+         }
+      }
+   },
+   {
+      "id": 3,
+      "name": "Finder",
+      "size": "small",
+      "role": "Explorer",
+      "environment": "all",
+      "base_hull": 3,
+      "base_shields": 0,
+      "base_speed": 5,
+      "base_power": 1,
+      "base_range": 10,
+      "base_fuel_consumption": 0,
+      "base_food_consumption": 0,
+      "cargo": 4,
+      "hangar": 0,
+      "hardpoints": {
+         "small": 2,
+         "medium": 0,
+         "large": 0,
+         "huge": 0
+      },
+      "cost": {
+         "purchase": 1200,
+         "craft": {
+            "metal": 10,
+            "stone": 2,
+            "water": 5
+         }
+      }
+   },
+   {
+      "id": 4,
+      "name": "Blaster",
+      "size": "small",
+      "role": "Fighter",
+      "environment": "all",
+      "base_hull": 4,
+      "base_shields": 1,
+      "base_speed": 5,
+      "base_power": 3,
+      "base_range": 5,
+      "base_fuel_consumption": 1,
+      "base_food_consumption": 0,
+      "cargo": 4,
+      "hangar": 0,
+      "hardpoints": {
+         "small": 2,
+         "medium": 1,
+         "large": 0,
+         "huge": 0
+      },
+      "cost": {
+         "purchase": 2000,
+         "craft": {}
+      }
+   },
+   {
+      "id": 5,
+      "name": "Blocker",
+      "size": "small",
+      "role": "Defender",
+      "environment": "all",
+      "base_hull": 4,
+      "base_shields": 4,
+      "base_speed": 5,
+      "base_power": 3,
+      "base_range": 6,
+      "base_fuel_consumption": 1,
+      "base_food_consumption": 1,
+      "cargo": 4,
+      "hangar": 0,
+      "hardpoints": {
+         "small": 3,
+         "medium": 0,
+         "large": 0,
+         "huge": 0
+      },
+      "cost": {
+         "purchase": 1800,
+         "craft": {}
+      }
+   }
+]

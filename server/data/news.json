@@ -3,6 +3,7 @@
       "id": "27-05-20-1",
       "title": "First Article",
       "image": "",
+      "color": "red",
       "date": "March 27, 2020",
       "content": [
          "The first article.",
@@ -14,6 +15,7 @@
       "id": "27-05-20-2",
       "title": "Welcome to Everday!",
       "image": "",
+      "color": "blue",
       "date": "March 27, 2020",
       "content": [
          "I'm surprised you made it here already! Everday is very much still in the early phases of development.",

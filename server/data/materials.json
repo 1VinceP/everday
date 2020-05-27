@@ -1,0 +1,68 @@
+[
+   {
+      "id": 1,
+      "name": "stone",
+      "location": {
+         "earth-like": "low",
+         "metallic": "medium",
+         "rocky": "high"
+      },
+      "value": {
+         "purchase": 5,
+         "craft": null
+      }
+   },
+   {
+      "id": 2,
+      "name": "metal",
+      "location": {
+         "earth-like": "low",
+         "metallic": "medium",
+         "rocky": "low"
+      },
+      "value": {
+         "purchase": 12,
+         "craft": {
+            "stone": 2
+         }
+      }
+   },
+   {
+      "id": 3,
+      "name": "ice",
+      "location": {
+         "earth-like": "low",
+         "icy": "high",
+         "rocky": "low"
+      },
+      "value": {
+         "purchase": 4,
+         "craft": null
+      }
+   },
+   {
+      "id": 4,
+      "name": "water",
+      "location": {
+         "earth-like": "medium",
+         "water": "high"
+      },
+      "value": {
+         "purchase": 15,
+         "craft": {
+            "ice": 3
+         }
+      }
+   },
+   {
+      "id": 5,
+      "name": "electronics",
+      "location": {},
+      "value": {
+         "purchase": 20,
+         "craft": {
+            "metal": 4
+         }
+      }
+   }
+]

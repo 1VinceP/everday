@@ -1,0 +1,55 @@
+[
+   {
+      "id": 1,
+      "name": "rocky"
+   },
+   {
+      "id": 2,
+      "name": "metallic"
+   },
+   {
+      "id": 3,
+      "name": "earth-like"
+   },
+   {
+      "id": 4,
+      "name": "water"
+   },
+   {
+      "id": 5,
+      "name": "icy"
+   },
+   {
+      "id": 6,
+      "name": "gas-giant"
+   },
+   {
+      "id": 15,
+      "name": "main-sequence",
+      "type": "star"
+   },
+   {
+      "id": 16,
+      "name": "super-giant",
+      "type": "star"
+   },
+   {
+      "id": 17,
+      "name": "carbon",
+      "type": "star"
+   },
+   {
+      "id": 18,
+      "name": "neutron",
+      "type": "star"
+   },
+   {
+      "id": 19,
+      "name": "brown-dwarf",
+      "type": "star"
+   },
+   {
+      "id": 20,
+      "name": "black hole"
+   }
+]

@@ -9,7 +9,8 @@ const express = require('express')
 
 const authController = require('./controllers/authController')
 	 , userController = require('./controllers/userController')
-	 , gamesController = require('./controllers/gamesController');
+	 , gamesController = require('./controllers/gamesController')
+	 , retrieveHardData = require('./controllers/retrievalController');
 
 const checkAuth = require('./middleware/checkAuth');
 
@@ -38,10 +39,13 @@ massive(process.env.DATABASE_URI).then(db => {
 	app.set('db', db);
 	app.get('db').init.seed()
 		.catch(res => console.error(res));
+	// wait for db connection to succeed before starting server
 	listen();
 }).catch((err) => {
 	console.log(chalk.red('Could not connect to Database'))
 	console.log(err);
+	// wait for db connection to fail before starting server
+	listen();
 });
 
 /* authentication */
@@ -49,22 +53,32 @@ app.post('/auth/login', authController.login);
 app.post('/auth/logout', authController.logout);
 app.get('/auth/checkSession', authController.checkSession);
 
-/* users */
-app.get('/users/:id', userController.getUser);
-
 /* games */
 app.get('/games/:userId', gamesController.getGames);
 app.delete('/games/:id', checkAuth, gamesController.deleteGame);
 
+/* hardcoded data */
+app.get('/retrieve/:dataset', retrieveHardData);
+
 /* news */
 app.get('/news', (req, res) => {
-	const news = require('./news').filter(article => !article.archived);
-	res.status(200).send(news);
+	const news = require('./data/news.json').filter(article => !article.archived);
+	res.status(200).send(news.reverse());
 });
 app.get('/news/archives', (req, res) => {
-	const news = require('./news');
-	res.status(200).send(news);
+	const news = [...require('./data/news.json')];
+	res.status(200).send(news.reverse());
 });
+app.get('/news/:id', (req, res) => {
+	const { id } = req.params;
+	const news = require('./data/news.json');
+	const index = news.findIndex(article => article.id == id);
+	if (index >= 0) res.status(200).send(news[index]);
+	else res.sendStatus(400);
+});
+
+/* users */
+app.get('/users/:id', userController.getUser);
 
 
 

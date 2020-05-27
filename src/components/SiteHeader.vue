@@ -33,7 +33,7 @@ export default {
          <router-link to="/news"><button>News</button></router-link>
          <button>Wiki</button>
          <button>Help</button>
-         <button>Store</button>
+         <!-- <button>Store</button> -->
          <button @click="logout">Logout</button>
       </div>
    </header>
@@ -54,6 +54,7 @@ header {
       flex: 2;
       display: flex;
       align-items: center;
+      font-size: 20px;
    }
 
    .right {

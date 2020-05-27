@@ -78,7 +78,7 @@ export default {
                <div class="body"></div>
                <div class="foot">
                   <button class="play">Play</button>
-                  <button class="settings">Settings</button>
+                  <button class="edit">Edit</button>
                   <button class="delete" @click="onDelete(game.id)">Delete</button>
                </div>
             </div>
@@ -99,11 +99,10 @@ export default {
             <div
                v-for="article in news"
                :key="article.id"
-               class="article"
+               :class="['article', article.color]"
                @click="$router.push(`/news/${article.id}`)"
             >
-               <div>{{ article.title }}</div>
-               <div>{{ article.date }}</div>
+               <div class="title">{{ article.title }}</div>
             </div>
          </section>
       </div>
@@ -131,7 +130,7 @@ export default {
       padding: 10px;
 
       .game {
-         height: 180px;
+         height: 200px;
          width: 100%;
          background: $light-dark;
          display: flex;
@@ -160,7 +159,7 @@ export default {
                background: none;
                cursor: pointer;
                &.play { color: lime }
-               &.settings { color: blue }
+               &.edit { color: aquamarine }
                &.delete { color: red; }
             }
          }
@@ -193,9 +192,25 @@ export default {
       .article {
          height: 200px;
          width: 100%;
-         background: $light-dark;
-         border-radius: 3px;
+         display: flex;
+         flex-direction: column;
+         justify-content: flex-end;
+         border: 2px solid $dark;
          cursor: pointer;
+         &.blue { background: linear-gradient(aquamarine, blue); }
+         &.red { background: linear-gradient(orange, red); }
+         &.green { background: linear-gradient(yellow, limegreen) }
+         &:not(:last-child) { margin-bottom: 10px; }
+         &:hover { border: 2px solid white; }
+
+         .title {
+            width: 100%;
+            display: flex;
+            background: linear-gradient(#0000, #000a);
+            align-items: center;
+            padding: 10px;
+            font-size: 20px;
+         }
       }
    }
 }
