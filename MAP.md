@@ -1,4 +1,4 @@
-- [x] v0.0.1 - The Setup
+- [x] v0.1.0 - The Setup
   - [x] setup db
   - [x] login
     - [x] create account
@@ -21,11 +21,11 @@
   - [x] complex db id strings
   - [x] first deploy
 
-- [ ] v0.0.2 - The Game Basics
+- [ ] v0.1.2 - The Game Basics
   - [ ] load game dashboard
   - [ ] track achievements
 
-- [ ] v0.0.3 - Cleanup 1
+- [ ] v0.1.3 - Cleanup 1
   - [ ] better API error handling
     - [ ] auth endpoints
     - [ ] user endpoints
@@ -35,6 +35,6 @@
   - [ ] enhanced onboarding
     - [ ] separate sign up/login fields
 
-- [ ] v0.0.5 - UI Overhaul
+- [ ] v0.1.5 - UI Overhaul
   - [ ] out of game
   - [ ] in game
