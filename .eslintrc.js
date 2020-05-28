@@ -17,7 +17,8 @@ module.exports = {
 		'arrow-parens': 'off',
 		'linebreak-style': 'off',
 		'prefer-destructuring': 'off',
-		'no-else-return': 'off',
+      'no-else-return': 'off',
+      'indent': 'off',
 	},
 	overrides: [
 		{
@@ -28,9 +29,6 @@ module.exports = {
 			env: {
 				jest: true,
          },
-         rules: {
-            'indent': 0,
-         }
 		},
 	],
 };
