@@ -34,7 +34,7 @@ app.use(helmet());
 app.use(express.static(`${__dirname}/../public/index.html`));
 
 /* database connection */
-massive(process.env.DATABASE_URI).then(db => {
+massive(process.env.DATABASE_URL).then(db => {
 	let dbChalk = chalk.magenta;
 	console.log(dbChalk('Connected to Database'));
 	app.set('db', db);
@@ -112,7 +112,7 @@ app.get('/users/:id', userController.getUser);
 
 
 function listen() {
-	const PORT = process.env.NODE_PORT || 3003;
+	const PORT = process.env.DEV ? process.env.NODE_PORT || 3003 : process.env.PORT;
 	const portChalk = chalk.cyan.underline;
 	app.listen(PORT, () => { console.log(portChalk(`eavesdropping_on_port_${PORT}`)) });
 }
