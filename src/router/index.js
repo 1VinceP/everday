@@ -8,6 +8,7 @@ import Landing from '@/views/Landing.vue';
 import News from '@/views/News.vue';
 import NewsArticle from '@/views/NewsArticle.vue';
 import Account from '@/views/Account.vue';
+import Game from '@/views/Game.vue';
 
 Vue.use(VueRouter);
 
@@ -57,6 +58,17 @@ const routes = [
             name: 'News Article',
             component: NewsArticle,
             meta: { open: true },
+         },
+      ],
+   },
+   {
+      path: '/play',
+      component: EmptyRouterView,
+      children: [
+         {
+            path: ':gameId',
+            name: 'Play',
+            component: Game,
          },
       ],
    },

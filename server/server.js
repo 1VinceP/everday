@@ -3,7 +3,7 @@ const express = require('express')
 	 , bodyParser = require('body-parser')
 	 , history = require('connect-history-api-fallback')
 	 , session = require('express-session')
-	 , MemoryStore = require('memorystore')
+	 , MemoryStore = require('memorystore')(session)
 	 , massive = require('massive')
 	 , helmet = require('helmet')
     , { check } = require('express-validator')
@@ -13,9 +13,12 @@ const express = require('express')
 const authController = require('./controllers/authController')
 	 , userController = require('./controllers/userController')
 	 , gamesController = require('./controllers/gamesController')
+	 , playerController = require('./controllers/playerController')
+	 , galaxyController = require('./controllers/galaxyController')
 	 , retrieveHardData = require('./controllers/retrievalController');
 
 const checkAuth = require('./middleware/checkAuth');
+const fleetController = require('./controllers/fleetController');
 
 const app = express();
 
@@ -53,13 +56,14 @@ massive(process.env.DATABASE_URL).then(db => {
 	listen();
 });
 
+/* ////// authentication ////// */
 const validator = new PasswordValidator();
 validator.is().min(8)
    .has().lowercase()
    .has().uppercase()
    .has().digits()
-   .has().not().spaces();
-/* authentication */
+	.has().not().spaces();
+
 app.post('/auth/create', [
 	check('username').not().isEmpty().isLength({ min: 3 }).trim().escape(),
    check('email').not().isEmpty().isEmail().normalizeEmail(),
@@ -80,7 +84,13 @@ app.post('/auth/login', [
 app.post('/auth/logout', authController.logout);
 app.get('/auth/checkSession', authController.checkSession);
 
-/* games */
+/* ////// fleet ////// */
+app.get('/fleets/:gameId', checkAuth, fleetController.getFleets);
+
+/* ////// galaxy ////// */
+app.get('/galaxy/:gameId', checkAuth, galaxyController.getGalaxy);
+
+/* ////// games ////// */
 app.get('/games/:userId', checkAuth, gamesController.getGames);
 app.post('/games', checkAuth, gamesController.createGame);
 app.put('/games/:id', [
@@ -89,10 +99,10 @@ app.put('/games/:id', [
 ], checkAuth, gamesController.editGame);
 app.delete('/games/:id', checkAuth, gamesController.deleteGame);
 
-/* hardcoded data */
+/* ////// hardcoded data ////// */
 app.get('/retrieve/:dataset', retrieveHardData);
 
-/* news */
+/* ////// news ////// */
 app.get('/news', (req, res) => {
 	const news = require('./data/news.json').filter(article => !article.archived);
 	res.status(200).send(news.reverse());
@@ -109,7 +119,10 @@ app.get('/news/:id', (req, res) => {
 	else res.sendStatus(400);
 });
 
-/* users */
+/* ////// players ////// */
+app.get('/players/:gameId', checkAuth, playerController.getPlayers);
+
+/* ////// users ////// */
 app.get('/users/:id', userController.getUser);
 
 

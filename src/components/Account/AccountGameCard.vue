@@ -3,7 +3,7 @@ import { mapMutations, mapState } from 'vuex';
 import ky from 'ky';
 
 export default {
-   name: 'game',
+   name: 'account-game-card',
 
    data() {
       return {
@@ -63,7 +63,9 @@ export default {
       </div>
       <textarea v-else v-model="description" />
       <div class="foot">
-         <button v-show="!editing" class="play">Play</button>
+         <router-link :to="`/play/${game.id}`">
+            <button v-show="!editing" class="play">Play</button>
+         </router-link>
          <button v-if="!editing" class="edit" @click="editing = true">Edit</button>
          <button v-else @click="onSaveEdit" class="edit">Save</button>
          <button v-show="editing" @click="onCancelEdit" class="delete">Cancel</button>

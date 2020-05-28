@@ -90,8 +90,11 @@ CREATE TABLE Galaxies (
      id        CHAR(36) NOT NULL PRIMARY KEY
    , "game_id" CHAR(36) REFERENCES Games(id)
    , "name"    TEXT
-   , "size"    TEXT
+   , "size_x"  INTEGER
+   , "size_y"  INTEGER
 );
+INSERT INTO Galaxies (id, "game_id", "name", "size_x", "size_y")
+   VALUES ('11111111122222222223333333333444444', '123345567812345678901234561234567890', 'gal 1', 10, 10);
 
 CREATE TABLE Systems (
      id          CHAR(36) NOT NULL PRIMARY KEY

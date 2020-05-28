@@ -2,7 +2,7 @@
 import ky from 'ky';
 import { mapState, mapMutations } from 'vuex';
 import SiteHeader from '@/components/SiteHeader.vue';
-import Game from '@/components/account/Game.vue';
+import Game from '@/components/Account/AccountGameCard.vue';
 
 export default {
    name: 'account',

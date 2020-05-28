@@ -41,5 +41,19 @@
    flex-direction: column;
    align-items: center;
    color: white;
+
+   &.game {
+      height: 100vh;
+      max-height: 100vh;
+      padding: 0px;
+   }
+}
+
+.global-game {
+   background: $dark;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   color: white;
 }
 </style>

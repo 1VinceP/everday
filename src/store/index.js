@@ -6,6 +6,8 @@ Vue.use(Vuex);
 const initialState = () => ({
    user: {},
    games: [],
+   galaxy: {},
+   systems: [],
 });
 
 export default new Vuex.Store({
@@ -20,8 +22,9 @@ export default new Vuex.Store({
       },
 
       setStore: ( state, data ) => {
-         const [key] = Object.keys(data);
-         state[key] = data[key];
+         Object.keys(data).forEach(key => {
+            state[key] = data[key];
+         });
       },
    },
 
