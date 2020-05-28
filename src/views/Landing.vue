@@ -1,6 +1,8 @@
 <script>
-import ky from 'ky';
 import { mapMutations, mapState } from 'vuex';
+import ky from 'ky';
+import PasswordValidator from 'password-validator';
+import emailValidator from 'email-validator';
 import SiteHeader from '@/components/SiteHeader.vue';
 
 export default {
@@ -25,31 +27,66 @@ export default {
       ...mapMutations(['setStore']),
 
       async createAccount() {
-         const { username, email, password } = this;
-         const json = { username, email, password };
-         this.logginIn = true;
-         try {
-            const user = await ky.post('/auth/create', { json }).json();
-            this.loggingIn = false;
-            this.setStore({ user });
-            this.$router.push('/account');
-         } catch (error) {
-            // this.loggingIn = false;
-            console.log(error);
+         const {
+            username, email, password, passwordConfirmation,
+         } = this;
+         const json = {
+            username, email, password, passwordConfirmation,
+         };
+
+         /* eslint-disable newline-per-chained-call */
+         const validator = new PasswordValidator();
+         validator.is().min(8)
+            .has().lowercase()
+            .has().uppercase()
+            .has().digits()
+            .has().not().spaces();
+         /* eslint-enable newline-per-chained-call */
+
+         if (!emailValidator.validate(this.email)) {
+            this.errorMessage = 'Email is not valid.';
+            return;
+         }
+
+         if (!validator.validate(this.password)) {
+            this.errorMessage = 'Password does not meet the requirements.';
+            return;
+         }
+
+         if (this.password !== this.passwordConfirmation) {
+            this.errorMessage = 'Passwords do not match.';
+            return;
+         }
+
+         if (username && email && password && passwordConfirmation) {
+            this.loggingIn = true;
+            try {
+               const user = await ky.post('/auth/create', { json }).json();
+               this.loggingIn = false;
+               this.setStore({ user });
+               this.$router.push('/account');
+            } catch (error) {
+               // this.loggingIn = false;
+               console.log(error);
+            }
          }
       },
 
       async login() {
-         const json = { username: this.username, password: this.password };
-         this.loggingIn = true;
-         try {
-            const user = await ky.post('/auth/login', { json }).json();
-            this.loggingIn = false;
-            this.setStore({ user });
-            this.$router.push('/account');
-         } catch (error) {
-            this.loggingIn = false;
-            this.errorMessage = 'Username or password is incorrect';
+         const { username, password } = this;
+         const json = { username, password };
+
+         if (username && password) {
+            this.loggingIn = true;
+            try {
+               const user = await ky.post('/auth/login', { json }).json();
+               this.loggingIn = false;
+               this.setStore({ user });
+               this.$router.push('/account');
+            } catch (error) {
+               this.loggingIn = false;
+               this.errorMessage = 'Username or password is incorrect';
+            }
          }
       },
 

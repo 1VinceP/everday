@@ -5,7 +5,7 @@ const express = require('express')
 	 , session = require('express-session')
 	 , massive = require('massive')
 	 , helmet = require('helmet')
-	 , { check } = require('express-validator')
+    , { check } = require('express-validator')
 	 , PasswordValidator = require('password-validator')
 	 , chalk = require('chalk');
 
@@ -34,7 +34,6 @@ app.use(helmet());
 app.use(express.static(`${__dirname}/../public`));
 
 /* database connection */
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 massive(process.env.DATABASE_URI).then(db => {
 	let dbChalk = chalk.magenta;
 	console.log(dbChalk('Connected to Database'));
@@ -51,11 +50,15 @@ massive(process.env.DATABASE_URI).then(db => {
 });
 
 const validator = new PasswordValidator();
-validator.is().min(8).has().lowercase().has().uppercase().has().digits().has().not().spaces();
+validator.is().min(8)
+   .has().lowercase()
+   .has().uppercase()
+   .has().digits()
+   .has().not().spaces();
 /* authentication */
 app.post('/auth/create', [
 	check('username').not().isEmpty().isLength({ min: 3 }).trim().escape(),
-	check('email').not().isEmpty().isEmail().normalizeEmail(),
+   check('email').not().isEmpty().isEmail().normalizeEmail(),
 	check('password').not().isEmpty().isLength({ min: 8 }).trim().escape()
 		.custom((value, { req }) => {
 			const validated = validator.validate(value);
@@ -66,14 +69,20 @@ app.post('/auth/create', [
 			return true;
 		}),
 ], authController.createUser);
-app.post('/auth/login', authController.login);
+app.post('/auth/login', [
+   check('username').not().isEmpty().isLength({ min: 3 }).trim().escape(),
+   check('password').not().isEmpty().isLength({ min: 8 }).trim().escape(),
+], authController.login);
 app.post('/auth/logout', authController.logout);
 app.get('/auth/checkSession', authController.checkSession);
 
 /* games */
 app.get('/games/:userId', checkAuth, gamesController.getGames);
 app.post('/games', checkAuth, gamesController.createGame);
-app.put('/games/:id', checkAuth, gamesController.editGame);
+app.put('/games/:id', [
+   check('name').not().isEmpty().trim().escape(),
+   check('description').trim().escape(),
+], checkAuth, gamesController.editGame);
 app.delete('/games/:id', checkAuth, gamesController.deleteGame);
 
 /* hardcoded data */

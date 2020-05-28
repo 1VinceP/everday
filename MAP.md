@@ -1,4 +1,4 @@
-- [ ] v0.0.1 - The Setup
+- [x] v0.0.1 - The Setup
   - [x] setup db
   - [x] login
     - [x] create account
@@ -19,8 +19,7 @@
   - [x] news article page
     - [x] display article
   - [x] complex db id strings
-  - [ ] server sanitization
-  - [ ] first deploy to heroku
+  - [x] first deploy
 
 - [ ] v0.0.2 - The Game Basics
   - [ ] load game dashboard

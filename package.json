@@ -16,6 +16,7 @@
 		"connect-history-api-fallback": "^1.6.0",
 		"core-js": "^3.6.4",
 		"dotenv": "^8.2.0",
+		"email-validator": "^2.0.4",
 		"express": "^4.17.1",
 		"express-session": "^1.17.1",
 		"express-validator": "^6.5.0",

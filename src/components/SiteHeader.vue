@@ -1,9 +1,13 @@
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import ky from 'ky';
 
 export default {
    name: 'site-header',
+
+   computed: {
+      ...mapState(['user']),
+   },
 
    methods: {
       ...mapMutations(['resetStore']),
@@ -34,7 +38,7 @@ export default {
          <button>Wiki</button>
          <button>Help</button>
          <!-- <button>Store</button> -->
-         <button @click="logout">Logout</button>
+         <button v-show="user.id" @click="logout">Logout</button>
       </div>
    </header>
 </template>

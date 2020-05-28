@@ -18,10 +18,10 @@ module.exports = {
       const emailFound = await req.app.get('db').users.find({ email });
 
       if (usernameFound.length > 0) {
-         res.status(400).send({ message: 'That username is already in use.' });
+         res.status(422).send({ message: 'That username is already in use.' });
          return;
       } else if (emailFound.length > 0) {
-         res.status(400).send({ message: 'That email is already in use.' });
+         res.status(422).send({ message: 'That email is already in use.' });
          return;
       }
 

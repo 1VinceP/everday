@@ -23,6 +23,7 @@ const routes = [
             // quick route if user is stored on vuex
             next('/account');
          } else {
+            next();
             // check if user is on session
             const response = await ky.get('/auth/checkSession').json();
             if (response.onSession) {
