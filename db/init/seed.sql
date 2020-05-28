@@ -21,21 +21,21 @@ DROP TABLE IF EXISTS Activity;
 DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users (
-     id SERIAL     PRIMARY KEY
+     id            CHAR(36) NOT NULL PRIMARY KEY
    , "username"    TEXT
    , "password"    TEXT
    , "email"       TEXT
    , "friend_code" CHAR(19)
    , "tier"        TEXT
 );
-INSERT INTO Users ("username", "password", "email", "friend_code", "tier")
-   VALUES ('a', 'a', 'a@email.com', '1234-1234-1234-1234', 'advanced');
-INSERT INTO Users ("username", "password", "email", "friend_code", "tier")
-   VALUES ('b', 'b', 'b@email.com', '4321-4321-4321-4321', null);
+INSERT INTO Users (id, "username", "password", "email", "friend_code", "tier")
+   VALUES ('123412341234123412341234121234567890', 'a', 'a', 'a@email.com', '1234-1234-1234-1234', 'advanced');
+INSERT INTO Users (id, "username", "password", "email", "friend_code", "tier")
+   VALUES ('123412341234123412341234211234567890', 'b', 'b', 'b@email.com', '4321-4321-4321-4321', null);
 
 CREATE TABLE Activity (
-     id SERIAL     PRIMARY KEY
-   , "user_id"     INTEGER REFERENCES Users(id)
+     id            CHAR(36) NOT NULL PRIMARY KEY
+   , "user_id"     CHAR(36) REFERENCES Users(id)
    , "title"       TEXT
    , "image"       TEXT
    , "description" TEXT
@@ -43,33 +43,38 @@ CREATE TABLE Activity (
 );
 
 CREATE TABLE Friends (
-     id SERIAL   PRIMARY KEY
-   , "user_id"   INTEGER REFERENCES Users(id)
-   , "friend_id" INTEGER REFERENCES Users(id)
+     id          CHAR(36) NOT NULL PRIMARY KEY
+   , "user_id"   CHAR(36) REFERENCES Users(id)
+   , "friend_id" CHAR(36) REFERENCES Users(id)
 );
-INSERT INTO Friends ("user_id", "friend_id") VALUES (1, 2);
+INSERT INTO Friends (id, "user_id", "friend_id")
+   VALUES (
+      '123321123321123321123321123212345678'
+      , '123412341234123412341234121234567890'
+      , '123412341234123412341234211234567890'
+   );
 
 CREATE TABLE Activity_reactions (
-     id SERIAL     PRIMARY KEY
-   , "activity_id" INTEGER REFERENCES Activity(id)
-   , "friend_id"   INTEGER REFERENCES Friends(id)
+     id            CHAR(36) NOT NULL PRIMARY KEY
+   , "activity_id" CHAR(36) REFERENCES Activity(id)
+   , "friend_id"   CHAR(36) REFERENCES Friends(id)
 );
 
 CREATE TABLE Games (
      id              CHAR(36) NOT NULL PRIMARY KEY
-   , "user_id"       INTEGER REFERENCES Users(id)
+   , "user_id"       CHAR(36) REFERENCES Users(id)
    , "name"          TEXT
    , "description"   TEXT
    , "creation_date" TIMESTAMP
    , "last_played"   TEXT
 );
 INSERT INTO Games (id, "user_id", "name", "description")
-   VALUES ('12334556781234567890123456', 1, 'Game 1', 'A neat game');
+   VALUES ('123345567812345678901234561234567890', '123412341234123412341234121234567890', 'Game 1', 'A neat game');
 INSERT INTO Games (id, "user_id", "name", "description")
-   VALUES ('12334556781234567890654321', 1, 'Game 2', 'A bad game');
+   VALUES ('123345567812345678906543211234567890', '123412341234123412341234121234567890', 'Game 2', 'A bad game');
 
 CREATE TABLE Players (
-     id SERIAL      PRIMARY KEY
+     id             CHAR(36) NOT NULL PRIMARY KEY
    , "game_id"      CHAR(36) REFERENCES Games(id) ON DELETE CASCADE
    , "name"         TEXT
    , "ai"           BOOLEAN
@@ -82,75 +87,75 @@ CREATE TABLE Players (
 );
 
 CREATE TABLE Galaxies (
-     id SERIAL PRIMARY KEY
+     id        CHAR(36) NOT NULL PRIMARY KEY
    , "game_id" CHAR(36) REFERENCES Games(id)
    , "name"    TEXT
    , "size"    TEXT
 );
 
 CREATE TABLE Systems (
-     id SERIAL   PRIMARY KEY
-   , "galaxy_id" INTEGER REFERENCES Galaxies(id)
+     id          CHAR(36) NOT NULL PRIMARY KEY
+   , "galaxy_id" CHAR(36) REFERENCES Galaxies(id)
    , "name"      TEXT
    , "x"         SMALLINT
    , "y"         SMALLINT
 );
 
 CREATE TABLE System_owners (
-     id SERIAL   PRIMARY KEY
-   , "system_id" INTEGER REFERENCES Systems(id)
-   , "player_id" INTEGER REFERENCES Players(id)
+     id          CHAR(36) NOT NULL PRIMARY KEY
+   , "system_id" CHAR(36) REFERENCES Systems(id)
+   , "player_id" CHAR(36) REFERENCES Players(id)
 );
 
 CREATE TABLE Technology (
-     id SERIAL     PRIMARY KEY
+     id            CHAR(36) NOT NULL PRIMARY KEY
    , "name"        TEXT
    , "description" TEXT
 );
 
 CREATE TABLE Resources (
-     id SERIAL     PRIMARY KEY
+     id            CHAR(36) NOT NULL PRIMARY KEY
    , "name"        TEXT
    , "description" TEXT
 );
 
 CREATE TABLE Planets (
-     id SERIAL           PRIMARY KEY
+     id                  CHAR(36) NOT NULL PRIMARY KEY
    , "name"              TEXT
-   , "system_id"         INTEGER REFERENCES Systems(id)
+   , "system_id"         CHAR(36) REFERENCES Systems(id)
    , "government"        TEXT
    , "state"             TEXT
-   , "resource_id"       INTEGER REFERENCES Resources(id)
+   , "resource_id"       CHAR(36) REFERENCES Resources(id)
    , "resource_quantity" TEXT -- none, low, medium, high
-   , "technology"        INTEGER REFERENCES Technology(id)
+   , "technology"        CHAR(36) REFERENCES Technology(id)
    , "x"                 SMALLINT
    , "y"                 SMALLINT
 );
 
 CREATE TABLE Planet_owners (
-     id SERIAL   PRIMARY KEY
-   , "planet_id" INTEGER REFERENCES Systems(id)
-   , "player_id" INTEGER REFERENCES Players(id)
+     id          CHAR(36) NOT NULL PRIMARY KEY
+   , "planet_id" CHAR(36) REFERENCES Systems(id)
+   , "player_id" CHAR(36) REFERENCES Players(id)
 );
 
 CREATE TABLE Services (
-     id SERIAL     PRIMARY KEY
+     id            CHAR(36) NOT NULL PRIMARY KEY
    , "name"        TEXT
    , "description" TEXT
 );
 
 CREATE TABLE Settlements (
-     id SERIAL     PRIMARY KEY
-   , "planet_id"   INTEGER REFERENCES Planets(id)
-   , "services_id" INTEGER REFERENCES Services(id)
+     id            CHAR(36) NOT NULL PRIMARY KEY
+   , "planet_id"   CHAR(36) REFERENCES Planets(id)
+   , "services_id" CHAR(36) REFERENCES Services(id)
 );
 
 CREATE TABLE Fleets (
-     id SERIAL          PRIMARY KEY
+     id                 CHAR(36) NOT NULL PRIMARY KEY
    , "game_id"          CHAR(36) REFERENCES Games(id)
-   , "player_id"        INTEGER REFERENCES Players(id)
-   , "system_location"  INTEGER REFERENCES Systems(id)
-   , "planet_location"  INTEGER REFERENCES Planets(id)
+   , "player_id"        CHAR(36) REFERENCES Players(id)
+   , "system_location"  CHAR(36) REFERENCES Systems(id)
+   , "planet_location"  CHAR(36) REFERENCES Planets(id)
    , "max_fuel"         INTEGER
    , "max_food"         INTEGER
    , "fuel"             INTEGER
@@ -160,14 +165,14 @@ CREATE TABLE Fleets (
 );
 
 CREATE TABLE Squadrons (
-     id SERIAL          PRIMARY KEY
-   , "fleet_id"         INTEGER REFERENCES Fleets(id)
+     id                 CHAR(36) NOT NULL PRIMARY KEY
+   , "fleet_id"         CHAR(36) REFERENCES Fleets(id)
    , "fuel_consumption" INTEGER
    , "food_consumption" INTEGER
 );
 
 CREATE TABLE Ships (
-     id SERIAL               PRIMARY KEY
+     id                      CHAR(36) NOT NULL PRIMARY KEY
    , "base_fuel_consumption" INTEGER
    , "base_power"            INTEGER
    , "base_speed"            INTEGER
@@ -175,9 +180,9 @@ CREATE TABLE Ships (
 );
 
 CREATE TABLE Squadron_ships (
-     id SERIAL          PRIMARY KEY
-   , "squadron_id"      INTEGER REFERENCES Squadrons(id)
-   , "ship_id"          INTEGER REFERENCES Ships(id)
+     id                 CHAR(36) NOT NULL PRIMARY KEY
+   , "squadron_id"      CHAR(36) REFERENCES Squadrons(id)
+   , "ship_id"          CHAR(36) REFERENCES Ships(id)
    , "name"             TEXT
    , "fuel_consumption" INTEGER
    , "role"             TEXT
@@ -188,14 +193,14 @@ CREATE TABLE Squadron_ships (
 );
 
 CREATE TABLE Weapons (
-     id SERIAL     PRIMARY KEY
+     id            CHAR(36) NOT NULL PRIMARY KEY
    , "name"        TEXT
    , "description" TEXT
    , "power"       INTEGER
 );
 
 CREATE TABLE Ship_weapons (
-     id SERIAL   PRIMARY KEY
-   , "ship_id"   INTEGER REFERENCES Squadron_ships(id)
-   , "weapon_id" INTEGER REFERENCES Weapons(id)
+     id          CHAR(36) NOT NULL PRIMARY KEY
+   , "ship_id"   CHAR(36) REFERENCES Squadron_ships(id)
+   , "weapon_id" CHAR(36) REFERENCES Weapons(id)
 );

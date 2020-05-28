@@ -5,6 +5,8 @@ const express = require('express')
 	 , session = require('express-session')
 	 , massive = require('massive')
 	 , helmet = require('helmet')
+	 , { check } = require('express-validator')
+	 , PasswordValidator = require('password-validator')
 	 , chalk = require('chalk');
 
 const authController = require('./controllers/authController')
@@ -48,8 +50,22 @@ massive(process.env.DATABASE_URI).then(db => {
 	listen();
 });
 
+const validator = new PasswordValidator();
+validator.is().min(8).has().lowercase().has().uppercase().has().digits().has().not().spaces();
 /* authentication */
-app.post('/auth/create', authController.createUser);
+app.post('/auth/create', [
+	check('username').not().isEmpty().isLength({ min: 3 }).trim().escape(),
+	check('email').not().isEmpty().isEmail().normalizeEmail(),
+	check('password').not().isEmpty().isLength({ min: 8 }).trim().escape()
+		.custom((value, { req }) => {
+			const validated = validator.validate(value);
+			const passwordMatch = value === req.body.passwordConfirmation;
+			if (!validated) throw new Error('Password does not pass validation.');
+			if (!passwordMatch) throw new Error('Passwords do not match.');
+
+			return true;
+		}),
+], authController.createUser);
 app.post('/auth/login', authController.login);
 app.post('/auth/logout', authController.logout);
 app.get('/auth/checkSession', authController.checkSession);

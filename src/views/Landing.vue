@@ -12,6 +12,7 @@ export default {
       username: '',
       email: '',
       password: '',
+      passwordConfirmation: '',
       loggingIn: false,
       errorMessage: '',
    }),
@@ -77,9 +78,20 @@ export default {
 
          <div class="login-container">
             Login
-            <input v-model="username" placeholder="username" />
-            <input v-model="email" placeholder="email" />
-            <input v-model="password" @keypress="handleEnter" placeholder="password" />
+            <input v-model="username" @keypress="handleEnter" placeholder="username" />
+            <input v-model="email" @keypress="handleEnter" placeholder="email" />
+            <input
+               v-model="password"
+               @keypress="handleEnter"
+               type="password"
+               placeholder="password"
+            />
+            <input
+               v-model="passwordConfirmation"
+               @keypress="handleEnter"
+               type="password"
+               placeholder="Confirm Password"
+            />
             <button @click="createAccount">Sign Up</button>
             <button @click="login" :disabled="loggingIn || !username || !password">Login</button>
             <div class="error-message" v-show="errorMessage">{{ errorMessage }}</div>

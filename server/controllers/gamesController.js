@@ -21,7 +21,6 @@ module.exports = {
 
       const [user] = await req.app.get('db').users.getUser({ id: userId });
       const games = await req.app.get('db').games.getGames({ userId });
-      console.log(user.tier);
 
       if (!user.tier && games.length >= 1) {
          res.status(401).send({ message: 'Basic tier game limit reached.' });
@@ -36,12 +35,10 @@ module.exports = {
 
       try {
          const id = shortId(36, 'complex');
-         console.log(id);
          const creationDate = moment();
          const newGames = await req.app.get('db').games.createGame({ id, userId, creationDate });
          res.status(200).send(newGames);
       } catch (error) {
-         console.log(error);
          res.sendStatus(400);
       }
    },

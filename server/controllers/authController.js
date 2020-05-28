@@ -1,11 +1,18 @@
-const bcrypt = require('bcrypt');
-const chalk = require('chalk');
+const bcrypt = require('bcrypt')
+   , { validationResult } = require('express-validator')
+   , chalk = require('chalk');
 const shortId = require('../utils/shortId');
 const saltRounds = Number(process.env.BCRYPT_SALT_ROUNDS);
 
 module.exports = {
    createUser: async (req, res) => {
       const { username, email, password } = req.body;
+
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+         res.status(422).send({ errors: errors.array() });
+         return;
+      }
 
       const usernameFound = await req.app.get('db').users.find({ username });
       const emailFound = await req.app.get('db').users.find({ email });
@@ -18,12 +25,19 @@ module.exports = {
          return;
       }
 
+      let hash;
+      if (process.env.DEV) {
+         hash = password;
+      } else {
+         hash = await bcrypt.hash(password, saltRounds);
+      }
+
+      const id = shortId(36);
       const friend_code = [shortId(4), shortId(4), shortId(4), shortId(4)].join('-').toUpperCase();
-      const hash = await bcrypt.hash(password, saltRounds);
-      const [user] = await req.app.get('db').auth.createUser({ username, email, password: hash, friend_code });
+      const [user] = await req.app.get('db').auth.createUser({ id, username, email, password: hash, friend_code });
       console.log(chalk.yellow('New user created.'));
 
-      req.session.userId = user.user_id;
+      req.session.userId = user.id;
       res.status(200).send(user);
    },
 

@@ -18,7 +18,7 @@
     - [x] route to article
   - [x] news article page
     - [x] display article
-  - [ ] complex db id strings
+  - [x] complex db id strings
   - [ ] server sanitization
   - [ ] first deploy to heroku
 
@@ -33,6 +33,8 @@
     - [ ] game endpoints
     - [ ] retrieval endpoints
     - [ ] news endpoints
+  - [ ] enhanced onboarding
+    - [ ] separate sign up/login fields
 
 - [ ] v0.0.5 - UI Overhaul
   - [ ] out of game
