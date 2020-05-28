@@ -22,6 +22,7 @@
   - [x] first deploy
 
 - [ ] v0.1.2 - The Game Basics
+  - [ ] Add new session store
   - [ ] load game dashboard
   - [ ] track achievements
 
