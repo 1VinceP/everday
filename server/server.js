@@ -31,7 +31,7 @@ app.use(history()); // allows use of vue-router history mode
 app.use(bodyParser.json());
 app.use(helmet());
 
-app.use(express.static(`${__dirname}/../public/index.html`));
+app.use(express.static(`${__dirname}/../dist`));
 
 /* database connection */
 massive(process.env.DATABASE_URI).then(db => {

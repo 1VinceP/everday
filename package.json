@@ -6,12 +6,13 @@
       "node": "12.17.x"
    },
 	"scripts": {
-		"start": "vue-cli-service serve",
+		"start": "node server/server.js",
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
 		"test:unit": "vue-cli-service test:unit",
 		"test:e2e": "vue-cli-service test:e2e",
-		"lint": "vue-cli-service lint"
+      "lint": "vue-cli-service lint",
+      "postinstall": "if test \"$NODE_ENV\" = \"production\"; then npm run build; fi"
 	},
 	"dependencies": {
 		"bcrypt": "^4.0.1",
