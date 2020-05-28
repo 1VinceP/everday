@@ -19,10 +19,10 @@
   - [x] news article page
     - [x] display article
   - [x] complex db id strings
+  - [x] Add session store
   - [x] first deploy
 
 - [ ] v0.1.2 - The Game Basics
-  - [ ] Add new session store
   - [ ] load game dashboard
   - [ ] track achievements
 
@@ -35,6 +35,7 @@
     - [ ] news endpoints
   - [ ] enhanced onboarding
     - [ ] separate sign up/login fields
+  - [ ] cookie alert
 
 - [ ] v0.1.5 - UI Overhaul
   - [ ] out of game

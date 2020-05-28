@@ -3,6 +3,7 @@ const express = require('express')
 	 , bodyParser = require('body-parser')
 	 , history = require('connect-history-api-fallback')
 	 , session = require('express-session')
+	 , MemoryStore = require('memorystore')
 	 , massive = require('massive')
 	 , helmet = require('helmet')
     , { check } = require('express-validator')
@@ -26,6 +27,9 @@ app.use(session({
 		secure: !process.env.DEV, // secure should be false for dev in http environments
 		maxAge: 60 * 60 * 1000, // 1 hour
 	},
+	store: new MemoryStore({
+		checkPeriod: 60 * 60 * 1000, // prune expired entries every hour
+	}),
 }));
 app.use(history()); // allows use of vue-router history mode
 app.use(bodyParser.json());

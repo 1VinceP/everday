@@ -1,10 +1,10 @@
 {
 	"name": "everday",
 	"version": "0.1.0",
-   "private": true,
-   "engines": {
-      "node": "12.17.x"
-   },
+	"private": true,
+	"engines": {
+		"node": "12.17.x"
+	},
 	"scripts": {
 		"start": "vue-cli-service serve",
 		"serve": "vue-cli-service serve",
@@ -28,6 +28,7 @@
 		"ky": "^0.20.0",
 		"lodash": "^4.17.15",
 		"massive": "^6.1.1",
+		"memorystore": "^1.6.2",
 		"moment": "^2.26.0",
 		"password-validator": "^5.0.3",
 		"register-service-worker": "^1.7.1",
