@@ -23,8 +23,36 @@
   - [x] first deploy
 
 - [ ] v0.1.2 - The Game Basics
-  - [ ] load game dashboard
+  - [x] load game dashboard
   - [ ] track achievements
+    - [ ] log activity
+    - [ ] create achievements
+  - [ ] header
+    - [ ] display resources
+  - [ ] management panel
+    - [x] display tabs
+    - [ ] display data
+      - [ ] Fleets
+      - [ ] Systems
+      - [ ] Diplomacy
+      - [ ] Logs
+  - [ ] map
+    - [x] render grid
+    - [x] zoom grid
+    - [ ] pass data to each tile
+      - [x] system
+      - [x] fleet
+      - [x] coordinates
+      - [ ] events
+  - [ ] action panel
+    - [ ] selected system
+    - [ ] selected event
+    - [ ] selected fleet
+  - [ ] gameplay
+    - [ ] create fleets
+    - [ ] create squadrons
+    - [ ] move fleets - in galaxy
+    - [ ] move fleets - in system
 
 - [ ] v0.1.3 - Cleanup 1
   - [ ] better API error handling
@@ -36,7 +64,12 @@
   - [ ] enhanced onboarding
     - [ ] separate sign up/login fields
   - [ ] cookie alert
+  - [ ] unit testing
 
-- [ ] v0.1.5 - UI Overhaul
+- [ ] v0.1.5 - Combat
+  - [ ] combat UI
+  - [ ] combat logic
+
+- [ ] v0.1.6 - UI Overhaul
   - [ ] out of game
   - [ ] in game
