@@ -14,6 +14,5 @@ export default {
 header {
    height: $header-height;
    width: 100%;
-   background: red;
 }
 </style>

@@ -1,10 +1,25 @@
 <script>
 import GameHeader from './GameHeader.vue';
+import Tabs from './Tabs.vue';
+import Galaxy from './Galaxy/GalaxyMap.vue';
 
 export default {
    name: 'game-dashboard',
 
-   components: { GameHeader },
+   components: {
+      GameHeader, Galaxy, Tabs,
+   },
+
+   data: () => ({
+      managementTab: 'systems',
+      managementTabs: [
+         { label: 'S', value: 'systems' },
+         { label: 'F', value: 'fleets' },
+         { label: 'D', value: 'diplomacy' },
+         { label: 'L', value: 'log' },
+      ],
+      actionTabs: '',
+   }),
 };
 </script>
 
@@ -14,15 +29,19 @@ export default {
 
       <div class="dashboard">
          <section class="left">
-
+            <Tabs
+               :list="managementTabs"
+               :selected="managementTab"
+               vertical
+               @click="tab => managementTab = tab.value"
+            />
          </section>
 
          <section class="center">
-
+            <Galaxy />
          </section>
 
          <section class="right">
-
          </section>
       </div>
    </div>
@@ -43,9 +62,11 @@ export default {
    }
 
    .center {
+      height: 100%;
       flex: 3;
       margin: 0px 10px;
-      background: $light-dark;
+      background: black;
+      overflow: scroll;
    }
 }
 </style>

@@ -53,7 +53,7 @@ export default {
 <template>
    <div>
       <GameLoader v-if="loadingPercent < 100" :percent="loadingPercent" />
-      <GameDashboard />
+      <GameDashboard v-else />
    </div>
 </template>
 
