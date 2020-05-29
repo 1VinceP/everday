@@ -48,11 +48,23 @@
     - [ ] selected system
     - [ ] selected event
     - [ ] selected fleet
-  - [ ] gameplay
-    - [ ] create fleets
-    - [ ] create squadrons
-    - [ ] move fleets - in galaxy
-    - [ ] move fleets - in system
+  - [ ] game play
+    - [ ] store
+      - [ ] purchase ships
+      - [ ] sell ships
+      - [ ] purchase equipment
+      - [ ] sell equipment
+    - [ ] fleet management
+      - [ ] create fleets
+      - [ ] create squadrons
+      - [ ] edit fleets
+      - [ ] edit squadrons
+      - [ ] move fleets - in galaxy
+      - [ ] move fleets - in system
+    - [ ] resource management
+      - [ ] mine resources
+      - [ ] assign resource to fleets
+      - [ ] sell resources
 
 - [ ] v0.1.3 - Cleanup 1
   - [ ] better API error handling
@@ -73,3 +85,16 @@
 - [ ] v0.1.6 - UI Overhaul
   - [ ] out of game
   - [ ] in game
+
+- [ ] v0.1.7 - Social Functions
+
+- [ ] v0.1.8 - Advanced Game Mechanics
+  - [ ] automation
+    - [ ] resource gathering
+  - [ ] quests
+  - [ ] diplomacy
+    - [ ] trade resources
+    - [ ] diplomatic states
+  - [ ] ai
+
+- [ ] v0.1.9 - Storyline
