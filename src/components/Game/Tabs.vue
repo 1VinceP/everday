@@ -44,7 +44,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
+      cursor: default;
       &:hover { background: $dark-hover; }
       &.selected {
          background: $light-dark;

@@ -1,6 +1,10 @@
 <script>
+import { Spinner } from '@/components/common';
+
 export default {
    name: 'game-loader',
+
+   components: { Spinner },
 
    props: {
       percent: { type: Number },
@@ -13,7 +17,7 @@ export default {
       <h1 class="title">Everday</h1>
 
       <div class="loader-container">
-         <div class="loader" />
+         <Spinner />
          <span>Loading Game Data... {{ percent }}%</span>
       </div>
 
@@ -43,17 +47,6 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-   }
-
-   .loader {
-      height: 100px;
-      width: 100px;
-      background: transparent;
-      margin-bottom: 20px;
-      border: 4px solid $light-dark;
-      border-top: 4px solid turquoise;
-      border-radius: 50%;
-      animation: spin 1500ms linear infinite;
    }
 }
 </style>

@@ -36,8 +36,14 @@
       - [ ] Systems
       - [ ] Diplomacy
       - [ ] Logs
+    - [ ] map locate on click
+      - [ ] system
+      - [ ] fleet
   - [ ] map
-    - [x] render grid
+    - [ ] render grid
+      - [x] display tile fleet count
+      - [x] display tile system info
+      - [ ] display tile ownership
     - [x] zoom grid
     - [ ] pass data to each tile
       - [x] system
@@ -45,9 +51,14 @@
       - [x] coordinates
       - [ ] events
   - [ ] action panel
-    - [ ] selected system
-    - [ ] selected event
-    - [ ] selected fleet
+    - [x] selected
+      - [x] sector
+      - [x] planet
+      - [x] settlement
+    - [ ] display information
+      - [ ] sector
+      - [ ] planet
+      - [ ] settlement
   - [ ] game play
     - [ ] store
       - [ ] purchase ships
@@ -85,6 +96,8 @@
 - [ ] v0.1.6 - UI Overhaul
   - [ ] out of game
   - [ ] in game
+    - [ ] galaxy background
+      - [ ] diagonal gradient?
 
 - [ ] v0.1.7 - Social Functions
 
@@ -95,6 +108,8 @@
   - [ ] diplomacy
     - [ ] trade resources
     - [ ] diplomatic states
-  - [ ] ai
+  - [ ] Turn handling
 
-- [ ] v0.1.9 - Storyline
+- [ ] v0.1.9 - AI
+
+- [ ] v0.2.0 - Storyline

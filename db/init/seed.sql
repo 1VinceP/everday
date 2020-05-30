@@ -85,6 +85,8 @@ CREATE TABLE Players (
    , "stone"        INTEGER
    , "credits"      INTEGER
 );
+INSERT INTO Players (id, "game_id")
+   VALUES ('123789654065478932103216547895123789', '123345567812345678901234561234567890');
 
 CREATE TABLE Galaxies (
      id        CHAR(36) NOT NULL PRIMARY KEY
@@ -94,15 +96,18 @@ CREATE TABLE Galaxies (
    , "size_y"  INTEGER
 );
 INSERT INTO Galaxies (id, "game_id", "name", "size_x", "size_y")
-   VALUES ('11111111122222222223333333333444444', '123345567812345678901234561234567890', 'gal 1', 12, 12);
+   VALUES ('11111111122222222223333333333444444', '123345567812345678901234561234567890', 'Andromeda', 12, 12);
 
 CREATE TABLE Systems (
-     id          CHAR(36) NOT NULL PRIMARY KEY
-   , "galaxy_id" CHAR(36) REFERENCES Galaxies(id)
-   , "name"      TEXT
-   , "x"         SMALLINT
-   , "y"         SMALLINT
+     id             CHAR(36) NOT NULL PRIMARY KEY
+   , "galaxy_id"    CHAR(36) REFERENCES Galaxies(id)
+   , "name"         TEXT
+   , "x"            SMALLINT
+   , "y"            SMALLINT
+   , "primary_body" TEXT
 );
+INSERT INTO Systems (id, "galaxy_id", "name", "x", "y", "primary_body") VALUES
+   ('555555555555555555555555555555555555', '11111111122222222223333333333444444', 'Algorab', 1, 1, 'main-sequence-a');
 
 CREATE TABLE System_owners (
      id          CHAR(36) NOT NULL PRIMARY KEY
@@ -124,8 +129,8 @@ CREATE TABLE Resources (
 
 CREATE TABLE Planets (
      id                  CHAR(36) NOT NULL PRIMARY KEY
-   , "name"              TEXT
    , "system_id"         CHAR(36) REFERENCES Systems(id)
+   , "name"              TEXT
    , "government"        TEXT
    , "state"             TEXT
    , "resource_id"       CHAR(36) REFERENCES Resources(id)
@@ -134,6 +139,11 @@ CREATE TABLE Planets (
    , "x"                 SMALLINT
    , "y"                 SMALLINT
 );
+INSERT INTO Planets (id, "system_id", "name") VALUES
+   ('333333333333333333333333333333666666', '555555555555555555555555555555555555', 'Boris'),
+   ('333333333333333333333333333333555555', '555555555555555555555555555555555555', 'Jillian'),
+   ('333333333333333333333333333333444444', '555555555555555555555555555555555555', 'Ken');
+
 
 CREATE TABLE Planet_owners (
      id          CHAR(36) NOT NULL PRIMARY KEY
@@ -151,13 +161,18 @@ CREATE TABLE Settlements (
      id            CHAR(36) NOT NULL PRIMARY KEY
    , "planet_id"   CHAR(36) REFERENCES Planets(id)
    , "services_id" CHAR(36) REFERENCES Services(id)
+   , "name"        TEXT
 );
+INSERT INTO Settlements (id, "planet_id", "name") VALUES
+   ('784512000012457800003265980000136479', '333333333333333333333333333333666666', 'Knight Co.'),
+   ('976431258079461385209431675280159357', '333333333333333333333333333333666666', 'New Yirk'),
+   ('159753468295175984263458796154000000', '333333333333333333333333333333666666', 'Paladium Mining');
 
 CREATE TABLE Fleets (
      id                 CHAR(36) NOT NULL PRIMARY KEY
    , "game_id"          CHAR(36) REFERENCES Games(id)
    , "player_id"        CHAR(36) REFERENCES Players(id)
-   , "planet_location"  CHAR(36) REFERENCES Planets(id)
+   -- , "planet_location"  CHAR(36) REFERENCES Planets(id)
    , "galaxy_x"         INTEGER
    , "galaxy_y"         INTEGER
    , "max_fuel"         INTEGER
@@ -167,6 +182,8 @@ CREATE TABLE Fleets (
    , "fuel_consumption" INTEGER
    , "food_consumption" INTEGER
 );
+INSERT INTO Fleets (id, "game_id", "player_id", "galaxy_x", "galaxy_y")
+   VALUES ('987654321098765432109876543210987654', '123345567812345678901234561234567890', '123789654065478932103216547895123789', 1, 1);
 
 CREATE TABLE Squadrons (
      id                 CHAR(36) NOT NULL PRIMARY KEY

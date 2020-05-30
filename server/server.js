@@ -1,4 +1,5 @@
 require('dotenv').config();
+// npm imports
 const express = require('express')
 	 , bodyParser = require('body-parser')
 	 , history = require('connect-history-api-fallback')
@@ -10,15 +11,19 @@ const express = require('express')
 	 , PasswordValidator = require('password-validator')
 	 , chalk = require('chalk');
 
+// controller imports
 const authController = require('./controllers/authController')
-	 , userController = require('./controllers/userController')
-	 , gamesController = require('./controllers/gamesController')
+    , fleetController = require('./controllers/fleetController')
+    , galaxyController = require('./controllers/galaxyController')
+    , gamesController = require('./controllers/gamesController')
+    , planetController = require('./controllers/planetController')
 	 , playerController = require('./controllers/playerController')
-	 , galaxyController = require('./controllers/galaxyController')
-	 , retrieveHardData = require('./controllers/retrievalController');
+    , retrieveHardData = require('./controllers/retrievalController')
+    , settlementController = require('./controllers/settlementController')
+	 , userController = require('./controllers/userController');
 
+// middleware imports
 const checkAuth = require('./middleware/checkAuth');
-const fleetController = require('./controllers/fleetController');
 
 const app = express();
 
@@ -37,7 +42,6 @@ app.use(session({
 app.use(history()); // allows use of vue-router history mode
 app.use(bodyParser.json());
 app.use(helmet());
-
 app.use(express.static(`${__dirname}/../public/index.html`));
 
 /* database connection */
@@ -119,8 +123,14 @@ app.get('/news/:id', (req, res) => {
 	else res.sendStatus(400);
 });
 
+/* ////// planets ////// */
+app.get('/planets/:systemId', planetController.getPlanets);
+
 /* ////// players ////// */
 app.get('/players/:gameId', checkAuth, playerController.getPlayers);
+
+/* ////// settlements ////// */
+app.get('/settlements/:planetId', settlementController.getSettlements);
 
 /* ////// users ////// */
 app.get('/users/:id', userController.getUser);

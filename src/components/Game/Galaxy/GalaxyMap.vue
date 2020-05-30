@@ -1,12 +1,13 @@
 <script>
 import { mapState } from 'vuex';
+import generateSector from '@/generators/generateSector';
 import GalaxyToolbar from './GalaxyToolbar.vue';
-import GalaxyTile from './GalaxyTile.vue';
+import GalaxySectorTile from './GalaxySectorTile.vue';
 
 export default {
    name: 'galaxy-map',
 
-   components: { GalaxyToolbar, GalaxyTile },
+   components: { GalaxyToolbar, GalaxySectorTile },
 
    data: () => ({
       zoom: 1,
@@ -17,7 +18,7 @@ export default {
       ...mapState(['galaxy', 'systems', 'fleets']),
 
       zoomScale() {
-         return `${70 * this.zoom}px`;
+         return `${60 * this.zoom}px`;
       },
    },
 
@@ -43,15 +44,21 @@ export default {
          const fleets = this.fleets.filter(fleet => fleet.galaxy_x === x && fleet.galaxy_y === y);
          return {
             coords: { x, y },
-            system,
+            system: !system ? generateSector() : system,
             fleets,
             selected: this.selectedTile.x === x && this.selectedTile.y === y,
+            isSystem: !!system,
          };
       },
 
       handleTileClick(data) {
-         console.log(data);
-         this.selectedTile = { x: data.coords.x, y: data.coords.y };
+         if (data.selected) {
+            this.$emit('setSector', 'reset');
+            this.selectedTile = { x: -1, y: -1 };
+         } else {
+            this.$emit('setSector', data);
+            this.selectedTile = { x: data.coords.x, y: data.coords.y };
+         }
       },
    },
 };
@@ -70,10 +77,10 @@ export default {
             gridTemplateRows: `repeat(${galaxy.size_y}, ${zoomScale})`,
          }"
       >
-         <GalaxyTile
+         <GalaxySectorTile
             v-for="n in galaxy.size_x * galaxy.size_y"
             :key="n"
-            :data="createData(n)"
+            :sector="createData(n)"
             @click="handleTileClick"
          />
       </div>

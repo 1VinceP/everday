@@ -3,7 +3,7 @@ module.exports = {
       const { gameId } = req.params;
       const playerId = req.session.userId;
 
-      const fleets = await req.app.get('db').fleets.getPlayerFleetsByGame({ gameId, playerId });
+      const fleets = await req.app.get('db').fleets.getFleetsByGame({ gameId, playerId });
 
       let squadrons = [];
       if (fleets.length > 0) {
