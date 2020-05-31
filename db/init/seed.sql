@@ -1,24 +1,62 @@
+-- -- cleanup/reset db. also, a reverse table of contents -- --
+DROP TABLE IF EXISTS System_owners;
+DROP TABLE IF EXISTS Planet_owners;
 DROP TABLE IF EXISTS Ship_weapons;
-DROP TABLE IF EXISTS Weapons;
 DROP TABLE IF EXISTS Squadron_ships;
-DROP TABLE IF EXISTS Ships;
+DROP TABLE IF EXISTS Activity_reactions;
 DROP TABLE IF EXISTS Squadrons;
 DROP TABLE IF EXISTS Fleets;
 DROP TABLE IF EXISTS Settlements;
-DROP TABLE IF EXISTS Services;
-DROP TABLE IF EXISTS Planet_owners;
 DROP TABLE IF EXISTS Planets;
-DROP TABLE IF EXISTS Resources;
-DROP TABLE IF EXISTS Technology;
-DROP TABLE IF EXISTS System_owners;
 DROP TABLE IF EXISTS Systems;
 DROP TABLE IF EXISTS Galaxies;
 DROP TABLE IF EXISTS Players;
 DROP TABLE IF EXISTS Games;
-DROP TABLE IF EXISTS Activity_reactions;
 DROP TABLE IF EXISTS Friends;
 DROP TABLE IF EXISTS Activity;
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Services;
+DROP TABLE IF EXISTS Weapons;
+DROP TABLE IF EXISTS Ships;
+DROP TABLE IF EXISTS Resources;
+DROP TABLE IF EXISTS Technology;
+
+-- -- non-modifyable data tables -- --
+
+CREATE TABLE Technology (
+     id            CHAR(36) NOT NULL PRIMARY KEY
+   , "name"        TEXT
+   , "description" TEXT
+);
+
+CREATE TABLE Resources (
+     id            CHAR(36) NOT NULL PRIMARY KEY
+   , "name"        TEXT
+   , "description" TEXT
+);
+
+CREATE TABLE Ships (
+     id                      CHAR(36) NOT NULL PRIMARY KEY
+   , "base_fuel_consumption" INTEGER
+   , "base_power"            INTEGER
+   , "base_speed"            INTEGER
+   , "base_hull"             INTEGER
+);
+
+CREATE TABLE Weapons (
+     id            CHAR(36) NOT NULL PRIMARY KEY
+   , "name"        TEXT
+   , "description" TEXT
+   , "power"       INTEGER
+);
+
+CREATE TABLE Services (
+     id            CHAR(36) NOT NULL PRIMARY KEY
+   , "name"        TEXT
+   , "description" TEXT
+);
+
+-- -- user modifyable tables -- --
 
 CREATE TABLE Users (
      id            CHAR(36) NOT NULL PRIMARY KEY
@@ -53,12 +91,6 @@ INSERT INTO Friends (id, "user_id", "friend_id")
       , '123412341234123412341234121234567890'
       , '123412341234123412341234211234567890'
    );
-
-CREATE TABLE Activity_reactions (
-     id            CHAR(36) NOT NULL PRIMARY KEY
-   , "activity_id" CHAR(36) REFERENCES Activity(id)
-   , "friend_id"   CHAR(36) REFERENCES Friends(id)
-);
 
 CREATE TABLE Games (
      id              CHAR(36) NOT NULL PRIMARY KEY
@@ -109,24 +141,6 @@ CREATE TABLE Systems (
 INSERT INTO Systems (id, "galaxy_id", "name", "x", "y", "primary_body") VALUES
    ('555555555555555555555555555555555555', '11111111122222222223333333333444444', 'Algorab', 1, 1, 'main-sequence-a');
 
-CREATE TABLE System_owners (
-     id          CHAR(36) NOT NULL PRIMARY KEY
-   , "system_id" CHAR(36) REFERENCES Systems(id)
-   , "player_id" CHAR(36) REFERENCES Players(id)
-);
-
-CREATE TABLE Technology (
-     id            CHAR(36) NOT NULL PRIMARY KEY
-   , "name"        TEXT
-   , "description" TEXT
-);
-
-CREATE TABLE Resources (
-     id            CHAR(36) NOT NULL PRIMARY KEY
-   , "name"        TEXT
-   , "description" TEXT
-);
-
 CREATE TABLE Planets (
      id                  CHAR(36) NOT NULL PRIMARY KEY
    , "system_id"         CHAR(36) REFERENCES Systems(id)
@@ -143,19 +157,6 @@ INSERT INTO Planets (id, "system_id", "name") VALUES
    ('333333333333333333333333333333666666', '555555555555555555555555555555555555', 'Boris'),
    ('333333333333333333333333333333555555', '555555555555555555555555555555555555', 'Jillian'),
    ('333333333333333333333333333333444444', '555555555555555555555555555555555555', 'Ken');
-
-
-CREATE TABLE Planet_owners (
-     id          CHAR(36) NOT NULL PRIMARY KEY
-   , "planet_id" CHAR(36) REFERENCES Systems(id)
-   , "player_id" CHAR(36) REFERENCES Players(id)
-);
-
-CREATE TABLE Services (
-     id            CHAR(36) NOT NULL PRIMARY KEY
-   , "name"        TEXT
-   , "description" TEXT
-);
 
 CREATE TABLE Settlements (
      id            CHAR(36) NOT NULL PRIMARY KEY
@@ -192,12 +193,12 @@ CREATE TABLE Squadrons (
    , "food_consumption" INTEGER
 );
 
-CREATE TABLE Ships (
-     id                      CHAR(36) NOT NULL PRIMARY KEY
-   , "base_fuel_consumption" INTEGER
-   , "base_power"            INTEGER
-   , "base_speed"            INTEGER
-   , "base_hull"             INTEGER
+-- -- many/many tables -- --
+
+CREATE TABLE Activity_reactions (
+     id            CHAR(36) NOT NULL PRIMARY KEY
+   , "activity_id" CHAR(36) REFERENCES Activity(id)
+   , "friend_id"   CHAR(36) REFERENCES Friends(id)
 );
 
 CREATE TABLE Squadron_ships (
@@ -213,15 +214,20 @@ CREATE TABLE Squadron_ships (
    , "hull"             INTEGER
 );
 
-CREATE TABLE Weapons (
-     id            CHAR(36) NOT NULL PRIMARY KEY
-   , "name"        TEXT
-   , "description" TEXT
-   , "power"       INTEGER
-);
-
 CREATE TABLE Ship_weapons (
      id          CHAR(36) NOT NULL PRIMARY KEY
    , "ship_id"   CHAR(36) REFERENCES Squadron_ships(id)
    , "weapon_id" CHAR(36) REFERENCES Weapons(id)
+);
+
+CREATE TABLE Planet_owners (
+     id          CHAR(36) NOT NULL PRIMARY KEY
+   , "planet_id" CHAR(36) REFERENCES Systems(id)
+   , "player_id" CHAR(36) REFERENCES Players(id)
+);
+
+CREATE TABLE System_owners (
+     id          CHAR(36) NOT NULL PRIMARY KEY
+   , "system_id" CHAR(36) REFERENCES Systems(id)
+   , "player_id" CHAR(36) REFERENCES Players(id)
 );

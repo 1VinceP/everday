@@ -1,19 +1,25 @@
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
    name: 'settlement-view',
 
-   props: {
-      settlement: { type: Object, required: true },
+   computed: {
+      ...mapState('gameData', ['settlement']),
+   },
+
+   methods: {
+      ...mapMutations('gameData', ['clearGameData']),
    },
 };
 </script>
 
 <template>
-   <div @click="$emit('close', 'reset')" :class="['settlement-view', { show: settlement.name }]">
+   <div :class="['settlement-view', { show: settlement.name }]">
       <span class="title">
          <span class="pad" />
          <h1>{{ settlement.name }}</h1>
-         <span class="pad close" @click="$emit('close', 'reset')">X</span>
+         <span class="pad close" @click="clearGameData('settlement')">X</span>
       </span>
    </div>
 </template>

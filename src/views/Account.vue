@@ -112,7 +112,7 @@ export default {
       width: 100%;
       display: flex;
       align-items: center;
-      padding: 16px 16px;
+      padding: 16px 0px;
    }
 
    .games {

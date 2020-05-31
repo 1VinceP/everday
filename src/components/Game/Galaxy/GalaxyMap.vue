@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import generateSector from '@/generators/generateSector';
 import GalaxyToolbar from './GalaxyToolbar.vue';
 import GalaxySectorTile from './GalaxySectorTile.vue';
@@ -11,11 +11,11 @@ export default {
 
    data: () => ({
       zoom: 1,
-      selectedTile: { x: -1, y: -1 },
    }),
 
    computed: {
       ...mapState(['galaxy', 'systems', 'fleets']),
+      ...mapState('gameData', ['selectedTile']),
 
       zoomScale() {
          return `${60 * this.zoom}px`;
@@ -23,6 +23,9 @@ export default {
    },
 
    methods: {
+      ...mapMutations('gameData', ['setGameData', 'clearGameData']),
+      ...mapActions('gameData', ['setSector']),
+
       alterZoom(newZoom) {
          if (newZoom <= 0.5) {
             this.zoom = 0.5;
@@ -53,11 +56,11 @@ export default {
 
       handleTileClick(data) {
          if (data.selected) {
-            this.$emit('setSector', 'reset');
-            this.selectedTile = { x: -1, y: -1 };
+            this.clearGameData('sector');
+            this.setGameData({ selectedTile: { x: -1, y: -1 } });
          } else {
-            this.$emit('setSector', data);
-            this.selectedTile = { x: data.coords.x, y: data.coords.y };
+            this.setSector(data);
+            this.setGameData({ selectedTile: { x: data.coords.x, y: data.coords.y } });
          }
       },
    },

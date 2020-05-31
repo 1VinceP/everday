@@ -18,7 +18,9 @@ module.exports = {
 		'linebreak-style': 'off',
 		'prefer-destructuring': 'off',
 		'no-else-return': 'off',
-		'indent': ['error', 3],
+      'indent': ['error', 3],
+      'no-nested-ternary': 'off',
+      'default-case': 'off',
 	},
 	overrides: [
 		{

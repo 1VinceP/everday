@@ -1,16 +1,29 @@
 <script>
+import startCase from 'lodash/startCase';
+
 export default {
    name: 'list-item',
 
+   computed: {
+      title() { return startCase(this.item.name); },
+
+      style() {
+         return {
+            height: this.height === 'auto' ? 'auto' : `${this.height}px`,
+         };
+      },
+   },
+
    props: {
       item: { type: Object, required: true },
+      height: { type: Number, default: 100 },
    },
 };
 </script>
 
 <template>
-   <div class="item">
-      <span class="title">{{ item.name }}</span>
+   <div class="item" :style="style">
+      <span class="title">{{ title }}</span>
    </div>
 </template>
 
@@ -18,7 +31,6 @@ export default {
 @import '../../../variables.scss';
 
 .item {
-   height: 100px;
    width: 100%;
    transition: background-color .15s ease-in-out;
    &:hover { background: $dark-hover; }

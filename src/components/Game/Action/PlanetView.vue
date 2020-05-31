@@ -1,4 +1,5 @@
 <script>
+import { mapState, mapActions, mapMutations } from 'vuex';
 import { Spinner } from '@/components/common';
 import CollectionItem from './ActionCollectionItem.vue';
 
@@ -7,11 +8,20 @@ export default {
 
    components: { CollectionItem, Spinner },
 
-   props: {
-      planet: { type: Object, required: true },
-      settlements: { type: Array, required: true },
-      loadingSettlements: { type: Boolean, default: false },
-      settlementSelected: { type: Boolean, default: false },
+   computed: {
+      ...mapState('gameData', [
+         'actionView',
+         'planet',
+         'settlements',
+         'loadingSettlements',
+      ]),
+
+      settlementSelected() { return this.actionView === 'settlement'; },
+   },
+
+   methods: {
+      ...mapMutations('gameData', ['clearGameData']),
+      ...mapActions('gameData', ['setSettlement']),
    },
 };
 </script>
@@ -25,7 +35,7 @@ export default {
       <span class="title">
          <span class="pad" />
          <h1>{{ planet.name }}</h1>
-         <span class="pad close" @click="$emit('close', 'reset')">X</span>
+         <span class="pad close" @click="clearGameData('planet')">X</span>
       </span>
 
       <Spinner v-if="loadingSettlements" :size="40" :speed="400" />
@@ -34,7 +44,7 @@ export default {
             v-for="settlement in settlements"
             :key="settlement.id"
             :item="settlement"
-            @click="() => $emit('setSettlement', settlement)"
+            @click="setSettlement(settlement)"
          />
       </div>
 

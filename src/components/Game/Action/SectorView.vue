@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { Spinner } from '@/components/common';
 import CollectionItem from './ActionCollectionItem.vue';
 
@@ -10,20 +10,26 @@ export default {
 
    computed: {
       ...mapState(['galaxy']),
+      ...mapState('gameData', [
+         'actionView',
+         'sector',
+         'planets',
+         'loadingPlanets',
+      ]),
 
       title() {
          return this.sector.isSystem
             ? this.sector.system.name
             : `${this.galaxy.name} ${this.sector.coords.x}0${this.sector.coords.y}0`;
       },
+
+      planetSelected() { return this.actionView === 'planet'; },
+
+      settlementSelected() { return this.actionView === 'settlement'; },
    },
 
-   props: {
-      sector: { type: Object, required: true },
-      planets: { type: Array, required: true },
-      loadingPlanets: { type: Boolean, default: false },
-      planetSelected: { type: Boolean, default: false },
-      settlementSelected: { type: Boolean, default: false },
+   methods: {
+      ...mapActions('gameData', ['setPlanet']),
    },
 };
 </script>
@@ -42,7 +48,7 @@ export default {
             v-for="planet in planets"
             :key="planet.id"
             :item="planet"
-            @click="$emit('setPlanet', planet)"
+            @click="setPlanet(planet)"
          />
       </div>
 
