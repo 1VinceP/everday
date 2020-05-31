@@ -88,6 +88,7 @@
     - [ ] separate sign up/login fields
   - [ ] cookie alert
   - [ ] unit testing
+  - [ ] e2e testing?
 
 - [ ] v0.1.5 - Combat
   - [ ] combat UI
