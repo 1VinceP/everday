@@ -5,12 +5,15 @@ const initialState = () => ({
 
    selectedTile: { x: -1, y: -1 },
    actionView: '',
+   activeTier: 0,
 
    sector: {},
+   sectorFleets: [], // unused
 
    planets: [],
    loadingPlanets: false,
    planet: {},
+   planetFleets: [], // unused
 
    settlements: [],
    loadingSettlements: false,
@@ -39,9 +42,14 @@ export default {
       clearGameData: (state, resetValue) => {
          /* eslint-disable indent */
          state.actionView = resetValue === 'sector' ? ''
-            : resetValue === 'planet' ? 'sector'
-            : resetValue === 'settlement' ? 'planet'
-            : state.actionView;
+                          : resetValue === 'planet' ? 'sector'
+                          : resetValue === 'settlement' ? 'planet'
+                          : state.actionView;
+
+         state.activeTier = resetValue === 'sector' ? 0
+                          : resetValue === 'planet' ? 1
+                          : resetValue === 'settlement' ? 2
+                          : state.activeTier;
 
          /* eslint-disable no-fallthrough */
          switch (resetValue) {
@@ -62,6 +70,7 @@ export default {
    actions: {
       setSector: async ({ state, commit }, sector) => {
          commit('clearGameData', 'planet');
+         commit('setGameData', { activeTier: 1 });
          state.actionView = 'sector';
          state.sector = sector;
          state.loadingPlanets = true;
@@ -72,6 +81,7 @@ export default {
 
       setPlanet: async ({ state, commit }, planet) => {
          commit('clearGameData', 'settlement');
+         commit('setGameData', { activeTier: 2 });
          state.actionView = 'planet';
          state.planet = planet;
          state.loadingSettlements = true;
@@ -80,7 +90,8 @@ export default {
          state.settlements = settlements;
       },
 
-      setSettlement: ({ state }, settlement) => {
+      setSettlement: ({ state, commit }, settlement) => {
+         commit('setGameData', { activeTier: 3 });
          state.actionView = 'settlement';
          state.settlement = settlement;
       },

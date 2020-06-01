@@ -1,11 +1,14 @@
 <script>
 import startCase from 'lodash/startCase';
+import { mapState, mapActions } from 'vuex';
 
 export default {
    name: 'list-item',
 
    computed: {
-      title() { return startCase(this.item.name); },
+      ...mapState(['fleets']),
+
+      title() { return startCase(this.system.name); },
 
       style() {
          return {
@@ -14,15 +17,37 @@ export default {
       },
    },
 
+   methods: {
+      ...mapActions('gameData', ['setGameData', 'setSector']),
+
+      createSectorData() {
+         const { x, y } = this.system;
+         const fleets = this.fleets.filter(fleet => fleet.galaxy_x === x && fleet.galaxy_y === y);
+         return {
+            coords: { x, y },
+            system: this.system,
+            fleets,
+            selected: true,
+            isSystem: true,
+         };
+      },
+
+      handleClick() {
+         this.setSector(this.createSectorData());
+         this.setGameData({ selectedTile: { x: this.system.x, y: this.system.y } });
+         this.setGameData({ activeTier: 1 });
+      },
+   },
+
    props: {
-      item: { type: Object, required: true },
+      system: { type: Object, required: true },
       height: { type: Number, default: 100 },
    },
 };
 </script>
 
 <template>
-   <div class="item" :style="style">
+   <div class="item" :style="style" @click="handleClick">
       <span class="title">{{ title }}</span>
    </div>
 </template>

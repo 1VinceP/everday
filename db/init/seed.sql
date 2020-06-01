@@ -2,9 +2,8 @@
 DROP TABLE IF EXISTS System_owners;
 DROP TABLE IF EXISTS Planet_owners;
 DROP TABLE IF EXISTS Ship_weapons;
-DROP TABLE IF EXISTS Squadron_ships;
+DROP TABLE IF EXISTS Fleet_squadrons;
 DROP TABLE IF EXISTS Activity_reactions;
-DROP TABLE IF EXISTS Squadrons;
 DROP TABLE IF EXISTS Fleets;
 DROP TABLE IF EXISTS Settlements;
 DROP TABLE IF EXISTS Planets;
@@ -186,13 +185,6 @@ CREATE TABLE Fleets (
 INSERT INTO Fleets (id, "game_id", "player_id", "galaxy_x", "galaxy_y")
    VALUES ('987654321098765432109876543210987654', '123345567812345678901234561234567890', '123789654065478932103216547895123789', 1, 1);
 
-CREATE TABLE Squadrons (
-     id                 CHAR(36) NOT NULL PRIMARY KEY
-   , "fleet_id"         CHAR(36) REFERENCES Fleets(id)
-   , "fuel_consumption" INTEGER
-   , "food_consumption" INTEGER
-);
-
 -- -- many/many tables -- --
 
 CREATE TABLE Activity_reactions (
@@ -201,9 +193,9 @@ CREATE TABLE Activity_reactions (
    , "friend_id"   CHAR(36) REFERENCES Friends(id)
 );
 
-CREATE TABLE Squadron_ships (
+CREATE TABLE Fleet_squadrons (
      id                 CHAR(36) NOT NULL PRIMARY KEY
-   , "squadron_id"      CHAR(36) REFERENCES Squadrons(id)
+   , "fleet_id"         CHAR(36) REFERENCES Fleets(id)
    , "ship_id"          CHAR(36) REFERENCES Ships(id)
    , "name"             TEXT
    , "fuel_consumption" INTEGER
@@ -212,11 +204,16 @@ CREATE TABLE Squadron_ships (
    , "speed"            INTEGER
    , "max_hull"         INTEGER
    , "hull"             INTEGER
+   , "ship_count"       INTEGER
+   , "max_actions"      INTEGER
+   , "actions"          INTEGER
+   , "spaces_moved"     BOOLEAN
+   , "has_acted"        BOOLEAN
 );
 
 CREATE TABLE Ship_weapons (
      id          CHAR(36) NOT NULL PRIMARY KEY
-   , "ship_id"   CHAR(36) REFERENCES Squadron_ships(id)
+   , "ship_id"   CHAR(36) REFERENCES Fleet_squadrons(id)
    , "weapon_id" CHAR(36) REFERENCES Weapons(id)
 );
 

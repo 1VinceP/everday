@@ -4,6 +4,7 @@ import GameHeader from './GameHeader.vue';
 import Tabs from './Tabs.vue';
 import ManagementView from './Management/ManagementView.vue';
 import Galaxy from './Galaxy/GalaxyMap.vue';
+import ActionPanel from './ActionPanel.vue';
 import SectorView from './Action/SectorView.vue';
 import PlanetView from './Action/PlanetView.vue';
 import SettlementView from './Action/SettlementView.vue';
@@ -16,6 +17,7 @@ export default {
       Tabs,
       ManagementView,
       Galaxy,
+      ActionPanel,
       SectorView,
       PlanetView,
       SettlementView,
@@ -32,7 +34,7 @@ export default {
 
    computed: {
       ...mapState(['systems', 'fleets']),
-      ...mapState('gameData', ['managementTab', 'sector']),
+      ...mapState('gameData', ['managementTab', 'activeTier', 'sector', 'planet']),
    },
 
    methods: {
@@ -51,7 +53,7 @@ export default {
                :list="managementTabs"
                :selected="managementTab"
                vertical
-               @click="tab => setGameData({ managementTab: tab.value})"
+               @click="tab => setGameData({ managementTab: tab.value })"
             />
             <ManagementView />
          </section>
@@ -61,9 +63,15 @@ export default {
          </section>
 
          <section class="right">
-            <SectorView v-if="sector.coords" />
-            <PlanetView />
-            <SettlementView />
+            <ActionPanel v-if="activeTier > 0" :tier="1" :activeTier="activeTier">
+               <SectorView />
+            </ActionPanel>
+            <ActionPanel :tier="2" :activeTier="activeTier">
+               <PlanetView />
+            </ActionPanel>
+            <ActionPanel :tier="3" :activeTier="activeTier">
+               <SettlementView />
+            </ActionPanel>
          </section>
       </div>
    </div>

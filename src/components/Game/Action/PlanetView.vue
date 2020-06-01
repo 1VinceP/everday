@@ -15,8 +15,6 @@ export default {
          'settlements',
          'loadingSettlements',
       ]),
-
-      settlementSelected() { return this.actionView === 'settlement'; },
    },
 
    methods: {
@@ -27,11 +25,7 @@ export default {
 </script>
 
 <template>
-   <div :class="['planet-view', {
-      show: planet.name,
-      fade: settlementSelected,
-      'loading-settlements': loadingSettlements,
-   }]">
+   <div class="planet-view">
       <span class="title">
          <span class="pad" />
          <h1>{{ planet.name }}</h1>
@@ -56,27 +50,11 @@ export default {
 @import '../../../variables.scss';
 
 .planet-view {
-   height: calc(100% - 45px);
+   height: 100%;
    width: 100%;
    display: flex;
    flex-direction: column;
    align-items: center;
-   background: $light-dark;
-   position: absolute;
-   bottom: -100%;
-   border-top-left-radius: 3px;
-   transition: all 200ms ease-in-out;
-   &.show {
-      display: flex;
-      flex-direction: column;
-      box-shadow: 1px 0px 6px 1px #000a;
-      transform: translateY(calc(-100% - 45px));
-      &.fade {
-         background: $dark;
-         opacity: 0.5;
-         transform: translateY(calc(-100% - 45px)) scale(0.98);
-      }
-   }
    &.loading-settlements { justify-content: space-between; }
 
    .title {

@@ -15,7 +15,7 @@ export default {
 </script>
 
 <template>
-   <div :class="['settlement-view', { show: settlement.name }]">
+   <div class="settlement-view">
       <span class="title">
          <span class="pad" />
          <h1>{{ settlement.name }}</h1>
@@ -28,19 +28,8 @@ export default {
 @import '../../../variables.scss';
 
 .settlement-view {
-   height: calc(100% - 90px);
+   height: 100%;
    width: 100%;
-   background: $light-dark;
-   position: absolute;
-   bottom: -100%;
-   border-top-left-radius: 3px;
-   transition: all 200ms ease-in-out;
-   &.show {
-      display: flex;
-      flex-direction: column;
-      box-shadow: 1px 0px 6px 1px #000a;
-      transform: translateY(calc(-100% - 90px));
-   }
 
    .title {
       width: 100%;

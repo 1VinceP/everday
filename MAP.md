@@ -22,11 +22,8 @@
   - [x] Add session store
   - [x] first deploy
 
-- [ ] v0.1.2 - The Game Basics
+- [ ] v0.1.2 - Basic Game UI Interaction
   - [x] load game dashboard
-  - [ ] track achievements
-    - [ ] log activity
-    - [ ] create achievements
   - [ ] header
     - [ ] display resources
   - [ ] management panel
@@ -110,6 +107,9 @@
     - [ ] trade resources
     - [ ] diplomatic states
   - [ ] Turn handling
+  - [ ] track achievements
+    - [ ] log activity
+    - [ ] create achievements
 
 - [ ] v0.1.9 - AI
 

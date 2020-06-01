@@ -61,6 +61,7 @@ export default {
          } else {
             this.setSector(data);
             this.setGameData({ selectedTile: { x: data.coords.x, y: data.coords.y } });
+            this.setGameData({ activeTier: 1 });
          }
       },
    },

@@ -43,8 +43,8 @@ export default {
       this.setStore({ galaxy, systems });
       this.countPercent(73);
 
-      const { fleets, squadrons } = await ky.get(`/fleets/${gameId}`, { headers }).json();
-      this.setStore({ fleets, squadrons });
+      const { fleets } = await ky.get(`/fleets/${gameId}`, { headers }).json();
+      this.setStore({ fleets });
       this.countPercent(100);
    },
 };

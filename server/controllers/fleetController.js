@@ -5,15 +5,6 @@ module.exports = {
 
       const fleets = await req.app.get('db').fleets.getFleetsByGame({ gameId, playerId });
 
-      let squadrons = [];
-      if (fleets.length > 0) {
-         fleets.forEach(async fleet => {
-            const fleetSquadrons = await req.app.get('db')
-               .squadrons.getSquadronsByFleet({ fleetId: fleet.id });
-            squadrons.push(fleetSquadrons);
-         });
-      }
-
-      res.status(200).send({ fleets, squadrons });
+      res.status(200).send({ fleets });
    },
 }

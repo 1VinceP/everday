@@ -35,11 +35,7 @@ export default {
 </script>
 
 <template>
-   <div :class="['sector-view', {
-      fade: planetSelected,
-      'double-fade': settlementSelected,
-      'loading-planets': loadingPlanets,
-   }]">
+   <div class="sector-view">
       <h1 class="title">{{ title }}</h1>
 
       <Spinner v-if="loadingPlanets" :size="40" :speed="400" />
@@ -62,22 +58,9 @@ export default {
 .sector-view {
    height: 100%;
    width: 100%;
-   background: $light-dark;
    display: flex;
    flex-direction: column;
    align-items: center;
-   transition: all .2s ease-in-out;
-   &.fade {
-      background: $dark;
-      opacity: 0.5;
-      transform: scale(0.98);
-   }
-   &.double-fade {
-      opacity: 0.25;
-      transform: scale(0.96);
-
-      .planets { visibility: hidden; }
-   }
    &.loading-planets { justify-content: space-between; }
 
    .title {

@@ -16,7 +16,6 @@ export default {
    },
 
    methods: {
-      ...mapState('gameData', ['getManagementItems']),
    },
 };
 </script>
@@ -27,7 +26,7 @@ export default {
       <ListItem
          v-for="item in managementItems"
          :key="item.id"
-         :item="item"
+         :system="item"
          :height="80"
       />
    </div>
